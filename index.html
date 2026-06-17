@@ -1,184 +1,295 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IntimateGem.col</title>
-<style>
-    /* Configuramos el fondo de la página y la letra */
-    body {
-        background-color: #fcf8f5; /* Un tono crema muy suave y elegante */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: #333333;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    <title>IntimateGem.col | Boutique Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose-gold: linear-gradient(45deg, #d4af37, #aa7c7c, #eecaca);
+            --pink-soft: #fcf8f5;
+            --text-dark: #4a3737;
+        }
 
-    /* Ponemos el título principal hermoso */
-    h1 {
-        color: #aa7c7c; /* Un rosa viejo / rose gold opaco muy sofisticado */
-        font-size: 2.5rem;
-        margin-bottom: 5px;
-    }
+        body {
+            background-color: var(--pink-soft);
+            /* Decoración floral sutil en el fondo */
+            background-image: url('https://www.transparenttextures.com/patterns/floral-paper.png');
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    /* Diseñamos la tarjeta del producto */
-    .producto-card {
-        background-color: #ffffff;
-        border: none !important; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Una sombra suave de boutique premium */
-        padding: 25px;
-        width: 320px;
-        border-radius: 12px;
-        text-align: center;
-        margin-top: 30px;
-    }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
 
-    /* Redondeamos las esquinas de la foto */
-    .producto-card img {
-        border-radius: 8px;
-    }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin: 0;
+            background: var(--rose-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
 
-    /* Estilo premium para los botones de + y - */
-    .btn-cantidad {
-        background-color: #aa7c7c;
-        color: white;
-        border: none;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%; /* Botones completamente redondos */
-        font-size: 1.2rem;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
+        .subtitle {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #aa7c7c;
+            margin-top: 10px;
+        }
 
-    .btn-cantidad:hover {
-        background-color: #8f6262; 
-    }
-</style>
+        #contenedor-productos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+        }
+
+        /* Tarjeta de Producto Luxe */
+        .producto-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            width: 320px;
+            box-shadow: 0 10px 30px rgba(170, 124, 124, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(170, 124, 124, 0.1);
+        }
+
+        .producto-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(170, 124, 124, 0.2);
+        }
+
+        .foto-principal {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: transform 0.5s ease;
+        }
+
+        .producto-card:hover .foto-principal {
+            transform: scale(1.03);
+        }
+
+        .miniaturas {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .miniatura-img {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid #eee;
+            transition: 0.3s;
+        }
+
+        .miniatura-img:hover {
+            border-color: #aa7c7c;
+            transform: translateY(-2px);
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .precio {
+            font-weight: 600;
+            color: #aa7c7c;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Botones Rose Gold */
+        .controles-cantidad {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-cantidad {
+            background: var(--rose-gold);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(170, 124, 124, 0.3);
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1eb954;
+            transform: scale(1.02);
+        }
+
+        /* Estilo para Agotado */
+        .agotado-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: 10;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agotado-badge {
+            background: #4a3737;
+            color: white;
+            padding: 10px 30px;
+            font-weight: bold;
+            transform: rotate(-15deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .is-agotado {
+            filter: grayscale(0.8);
+            pointer-events: none;
+        }
+
+        .is-agotado .agotado-overlay {
+            display: flex;
+        }
+    </style>
 </head>
 <body>
-   <h1>Bienvenida a IntimateGem.col</h1>
-<p>Lencería exclusiva y piezas únicas para resaltar tu brillo natural. ✨</p>
 
-<div id="contenedor-productos" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; background-color: #fcf9f9;">
-</div>
+    <header>
+        <h1>IntimateGem.col</h1>
+        <p class="subtitle">Lencería que resalta tu brillo natural ✨</p>
+    </header>
 
+    <div id="contenedor-productos">
+        </div>
 
 <script>
-    // 1. Conexión directa con tu Google Sheets limpia
-const idHoja = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
-const urlGSheets = `https://docs.google.com/spreadsheets/d/${idHoja}/gviz/tq?tqx=out:json`;
+    const idHoja = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
+    const urlGSheets = `https://docs.google.com/spreadsheets/d/${idHoja}/gviz/tq?tqx=out:json`;
 
-let inventarioProductos = [];
-let cantidades = {};
+    let inventarioProductos = [];
+    let cantidades = {};
 
-// 2. Función que va a Google Sheets a leer tus productos
-async function cargarTiendaAutomatica() {
-    try {
-        const respuesta = await fetch(urlGSheets);
-        const texto = await respuesta.text();
-        
-        // Convertimos la respuesta de Google en una lista limpia
-        const datosLimpios = JSON.parse(texto.substr(47).slice(0, -2));
-        const filas = datosLimpios.table.rows;
-        
-        // Mapeamos las columnas basándonos en tu nueva estructura
-        inventarioProductos = filas.map(fila => {
-            return {
-                id: fila.c[0] ? fila.c[0].v : "",
-                nombre: fila.c[1] ? fila.c[1].v : "",
-                precio: fila.c[2] ? fila.c[2].v : 0,
-                foto1: fila.c[3] ? fila.c[3].v : "",
-                foto2: fila.c[4] ? fila.c[4].v : "",
-                foto3: fila.c[5] ? fila.c[5].v : ""
-            };
-        });
+    async function cargarTienda() {
+        try {
+            const respuesta = await fetch(urlGSheets);
+            const texto = await respuesta.text();
+            const datos = JSON.parse(texto.substr(47).slice(0, -2));
+            const filas = datos.table.rows;
 
-        // Colocamos la cantidad inicial de cada prenda en 1
+            inventarioProductos = filas.map(f => ({
+                id: f.c[0]?.v || "",
+                nombre: f.c[1]?.v || "",
+                precio: f.c[2]?.v || 0,
+                foto1: f.c[3]?.v || "",
+                foto2: f.c[4]?.v || "",
+                foto3: f.c[5]?.v || "",
+                estado: f.c[6]?.v || "" // Leemos la nueva columna G
+            }));
+
+            inventarioProductos.forEach(p => cantidades[p.id] = 1);
+            dibujarTienda();
+        } catch (e) { console.error("Error:", e); }
+    }
+
+    function dibujarTienda() {
+        const contenedor = document.getElementById("contenedor-productos");
+        contenedor.innerHTML = "";
+
         inventarioProductos.forEach(p => {
-            cantidades[p.id] = 1;
+            const agotadoClass = p.estado.toLowerCase() === "agotado" ? "is-agotado" : "";
+            
+            contenedor.innerHTML += `
+                <div class="producto-card ${agotadoClass}">
+                    <div class="agotado-overlay"><div class="agotado-badge">AGOTADO</div></div>
+                    
+                    <img id="main-${p.id}" src="${p.foto1}" class="foto-principal">
+                    
+                    <div class="miniaturas">
+                        <img src="${p.foto1}" class="miniatura-img" onclick="cambiar('${p.id}', this.src)">
+                        ${p.foto2 ? `<img src="${p.foto2}" class="miniatura-img" onclick="cambiar('${p.id}', this.src)">` : ''}
+                        ${p.foto3 ? `<img src="${p.foto3}" class="miniatura-img" onclick="cambiar('${p.id}', this.src)">` : ''}
+                    </div>
+
+                    <h3>${p.nombre}</h3>
+                    <div class="precio">$${p.precio.toLocaleString('es-CO')} COP</div>
+
+                    <div class="controles-cantidad">
+                        <button class="btn-cantidad" onclick="cambiarCant('${p.id}', -1)">-</button>
+                        <span id="cant-${p.id}" style="font-weight:bold">1</span>
+                        <button class="btn-cantidad" onclick="cambiarCant('${p.id}', 1)">+</button>
+                    </div>
+
+                    <button class="btn-whatsapp" onclick="pedir('${p.id}')">
+                        Pedir por WhatsApp 💬
+                    </button>
+                </div>
+            `;
         });
-
-        // Dibujamos la tienda en la pantalla
-        dibujarCatalogo();
-
-    } catch (error) {
-        console.error("Error cargando la base de datos:", error);
     }
-}
 
-// 3. Función que fabrica las tarjetas premium en la pantalla
-function dibujarCatalogo() {
-    const contenedor = document.getElementById("contenedor-productos");
-    contenedor.innerHTML = ""; 
+    function cambiar(id, url) { document.getElementById(`main-${id}`).src = url; }
 
-    inventarioProductos.forEach(producto => {
-        // Creamos la hilera de miniaturas disponibles de forma dinámica
-        let miniaturasHTML = `<img src="${producto.foto1}" onclick="cambiarFoto('${producto.id}', this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #aa7c7c;">`;
-        
-        if(producto.foto2) {
-            miniaturasHTML += `<img src="${producto.foto2}" onclick="cambiarFoto('${producto.id}', this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;">`;
+    function cambiarCant(id, n) {
+        if (cantidades[id] + n >= 1) {
+            cantidades[id] += n;
+            document.getElementById(`cant-${id}`).innerText = cantidades[id];
         }
-        if(producto.foto3) {
-            miniaturasHTML += `<img src="${producto.foto3}" onclick="cambiarFoto('${producto.id}', this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;">`;
-        }
-
-        // Diseño premium de la tarjeta de producto
-        const tarjeta = `
-            <div class="producto-card" style="background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 15px; width: 320px; text-align: center; font-family: Arial, sans-serif; margin-bottom: 20px;">
-                <img id="foto-principal-${producto.id}" src="${producto.foto1}" alt="${producto.nombre}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
-                
-                <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
-                    ${miniaturasHTML}
-                </div>
-
-                <h3 style="margin: 15px 0 5px 0; color: #333; font-size: 1.2rem;">${producto.nombre}</h3>
-                <p style="margin: 0 0 15px 0; color: #aa7c7c; font-weight: bold;">Precio: $${producto.precio.toLocaleString('es-CO')} COP</p>
-                
-                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px;">
-                    <button onclick="modificarCantidad('${producto.id}', -1)" style="background: #aa7c7c; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center;">-</button>
-                    <span id="contador-${producto.id}" style="font-size: 1.1rem; font-weight: bold;">1</span>
-                    <button onclick="modificarCantidad('${producto.id}', 1)" style="background: #aa7c7c; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center;">+</button>
-                </div>
-
-                <button onclick="enviarPedido('${producto.id}')" style="background: #25d366; color: white; border: none; padding: 12px 20px; border-radius: 25px; width: 100%; font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    Pedir por WhatsApp 💬
-                </button>
-            </div>
-        `;
-        
-        contenedor.innerHTML += tarjeta;
-    });
-}
-
-// 4. Funciones de control inteligentes
-function cambiarFoto(idProducto, nuevaUrl) {
-    document.getElementById(`foto-principal-${idProducto}`).src = nuevaUrl;
-}
-
-function modificarCantidad(idProducto, cambio) {
-    let nuevaCantidad = cantidades[idProducto] + cambio;
-    if (nuevaCantidad >= 1) {
-        cantidades[idProducto] = nuevaCantidad;
-        document.getElementById(`contador-${idProducto}`).innerText = nuevaCantidad;
     }
-}
 
-function enviarPedido(idProducto) {
-    const producto = inventarioProductos.find(p => p.id === idProducto);
-    const cantidad = cantidades[idProducto];
-    const telefono = "573014816594"; 
-    
-    const mensaje = `¡Hola, IntimateGem! ✨ Me encantaría comprar ${cantidad} unidad(es) del producto: *${producto.nombre}*.`;
-    const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
-    window.open(url, '_blank');
-}
+    function pedir(id) {
+        const p = inventarioProductos.find(prod => prod.id === id);
+        const msj = encodeURIComponent(`¡Hola IntimateGem! ✨ Me encantaría el conjunto *${p.nombre}* (${cantidades[id]} unidad/es).`);
+        window.open(`https://wa.me/573014816594?text=${msj}`, '_blank');
+    }
 
-// 5. Encendemos el motor automático al cargar la página
-window.onload = cargarTiendaAutomatica;
-    
+    window.onload = cargarTienda;
 </script>
 </body>
 </html>
