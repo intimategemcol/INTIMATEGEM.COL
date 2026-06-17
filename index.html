@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IntimateGem.col | Boutique Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -12,37 +12,44 @@
             --text-dark: #4a3737;
         }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background-color: var(--pink-soft);
-    background-image: url('https://www.transparenttextures.com/patterns/floral-paper.png');
-    font-family: 'Poppins', sans-serif;
-    color: var(--text-dark);
-    margin: 0;
-    padding: 20px 10px; /* Reducimos el espacio a los lados */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+            background-image: url('https://www.transparenttextures.com/patterns/floral-paper.png');
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden; /* Evita que la página se mueva hacia los lados */
         }
 
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin: 30px 10px;
+            width: 100%;
+            max-width: 600px;
         }
 
         h1 {
-font-family: 'Playfair Display', serif;
-    font-size: 8vw; /* Se adapta dinámicamente al tamaño de la pantalla */
-    max-font-size: 3.5rem; /* Evita que crezca demasiado en computador */
-    margin: 0;
-    background: var(--rose-gold);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 1px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; /* Tamaño perfecto para computador */
+            background: var(--rose-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            line-height: 1.2;
         }
 
         .subtitle {
             font-style: italic;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #aa7c7c;
             margin-top: 10px;
         }
@@ -51,26 +58,28 @@ font-family: 'Playfair Display', serif;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
+            gap: 20px;
+            width: 100%;
             max-width: 1200px;
+            padding: 10px;
         }
 
-        /* Tarjeta de Producto Luxe */
+        /* Tarjeta de Producto Luxe Adaptable */
         .producto-card {
-background: white;
-    border-radius: 20px;
-    padding: 20px;
-    width: 90%; /* Se adapta a pantallas pequeñas */
-    max-width: 320px; /* Mantiene su tamaño estético en pantallas grandes */
-    box-shadow: 0 10px 30px rgba(170, 124, 124, 0.1);
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(170, 124, 124, 0.1);
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            width: 100%;
+            max-width: 330px; /* Tamaño ideal en PC */
+            box-shadow: 0 10px 30px rgba(170, 124, 124, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(170, 124, 124, 0.1);
         }
 
         .producto-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(170, 124, 124, 0.2);
         }
 
@@ -80,11 +89,6 @@ background: white;
             object-fit: cover;
             border-radius: 15px;
             margin-bottom: 15px;
-            transition: transform 0.5s ease;
-        }
-
-        .producto-card:hover .foto-principal {
-            transform: scale(1.03);
         }
 
         .miniaturas {
@@ -106,12 +110,11 @@ background: white;
 
         .miniatura-img:hover {
             border-color: #aa7c7c;
-            transform: translateY(-2px);
         }
 
         h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin: 10px 0;
             color: #333;
         }
@@ -119,11 +122,10 @@ background: white;
         .precio {
             font-weight: 600;
             color: #aa7c7c;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 20px;
         }
 
-        /* Botones Rose Gold */
         .controles-cantidad {
             display: flex;
             align-items: center;
@@ -159,11 +161,11 @@ background: white;
             border: none;
             width: 100%;
             cursor: pointer;
+            font-size: 1rem;
         }
 
         .btn-whatsapp:hover {
             background: #1eb954;
-            transform: scale(1.02);
         }
 
         /* Estilo para Agotado */
@@ -198,6 +200,27 @@ background: white;
         .is-agotado .agotado-overlay {
             display: flex;
         }
+
+        /* 📱 REGLAS ESPECIALES PARA CELULARES (¡AQUÍ ESTÁ LA MAGIA!) */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem; /* El título se encoge para que quepa completo */
+            }
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            .producto-card {
+                max-width: 100%; /* La tarjeta ocupa todo el ancho del celular de forma linda */
+                padding: 12px;
+            }
+            .foto-principal {
+                height: 320px; /* Ajustamos un poco la altura de la foto en celular */
+            }
+            .miniatura-img {
+                width: 50px;
+                height: 50px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -207,8 +230,7 @@ background: white;
         <p class="subtitle">Lencería que resalta tu brillo natural ✨</p>
     </header>
 
-    <div id="contenedor-productos">
-        </div>
+    <div id="contenedor-productos"></div>
 
 <script>
     const idHoja = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
@@ -231,7 +253,7 @@ background: white;
                 foto1: f.c[3]?.v || "",
                 foto2: f.c[4]?.v || "",
                 foto3: f.c[5]?.v || "",
-                estado: f.c[6]?.v || "" // Leemos la nueva columna G
+                estado: f.c[6]?.v || ""
             }));
 
             inventarioProductos.forEach(p => cantidades[p.id] = 1);
