@@ -26,7 +26,7 @@
     /* Diseñamos la tarjeta del producto */
     .producto-card {
         background-color: #ffffff;
-        border: none !important; /* Quitamos ese borde gris feo de ayer */
+        border: none !important; 
         box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Una sombra suave de boutique premium */
         padding: 25px;
         width: 320px;
@@ -54,113 +54,131 @@
     }
 
     .btn-cantidad:hover {
-        background-color: #8f6262; /* Se oscurece un poquito al pasar el mouse */
+        background-color: #8f6262; 
     }
 </style>
 </head>
 <body>
    <h1>Bienvenida a IntimateGem.col</h1>
 <p>Lencería exclusiva y piezas únicas para resaltar tu brillo natural. ✨</p>
-<div class="producto-card">
-    <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300" alt="Conjunto de Lencería Premium" width="100%">
-    
-    <h3>Conjunto Encaje Premium</h3>
-    <p>Precio: $75.000 COP</p>
 
-    <div>
-        <button class="btn-cantidad" onclick="restar()">-</button>
-        <span id="contador" style="margin: 0 15px; font-weight: bold;">1</span>
-        <button class="btn-cantidad" onclick="sumar()">+</button>
-    </div>
-    <button onclick="enviarPedido()" style="background-color: #25D366; color: white; border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 25px; margin-top: 20px; cursor: pointer; width: 100%; transition: 0.3s;">
-    Pedir por WhatsApp 💬
-</button>
+<div id="contenedor-productos" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; background-color: #fcf9f9;">
 </div>
 
-<div class="producto-card">
-    <img id="foto-principal2" src="https://lh3.googleusercontent.com/d/1UrR48WwMKReL9WLMHBOyQsT8Ji4GD_-w" alt="Goddess Set" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
-<<div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
-    <img src="https://lh3.googleusercontent.com/d/1UrR48WwMKReL9WLMHBOyQsT8Ji4GD_-w" onclick="cambiarFoto2(this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #aa7c7c;">
-    
-    <img src="https://lh3.googleusercontent.com/d/1J1NrItNXd9eq5zemX3DKKitDr33SrcSa" onclick="cambiarFoto2(this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;">
-    
-    <img src="https://lh3.googleusercontent.com/d/1UrR48WwMKReL9WLMHBOyQsT8Ji4GD_-w" onclick="cambiarFoto2(this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;">
-</div>
-    <h3>Goddess Set</h3>
-    <p>Precio: $45.000 COP</p>
-
-    <div>
-        <button class="btn-cantidad" onclick="restar2()">-</button>
-        <span id="contador2" style="margin: 0 15px; font-weight: bold;">1</span>
-        <button class="btn-cantidad" onclick="sumar2()">+</button>
-    </div>
-
-    <button onclick="enviarPedido2()" style="background-color: #25D366; color: white; border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 25px; margin-top: 20px; cursor: pointer; width: 100%; transition: 0.3s;">
-        Pedir por WhatsApp 💬
-    </button>
-</div>
 
 <script>
-    // Empezamos con 1 prenda seleccionada
-    let cantidad = 1; 
+    // 1. Conexión directa con tu Google Sheets limpia
+const idHoja = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
+const urlGSheets = `https://docs.google.com/spreadsheets/d/${idHoja}/gviz/tq?tqx=out:json`;
+
+let inventarioProductos = [];
+let cantidades = {};
+
+// 2. Función que va a Google Sheets a leer tus productos
+async function cargarTiendaAutomatica() {
+    try {
+        const respuesta = await fetch(urlGSheets);
+        const texto = await respuesta.text();
+        
+        // Convertimos la respuesta de Google en una lista limpia
+        const datosLimpios = JSON.parse(texto.substr(47).slice(0, -2));
+        const filas = datosLimpios.table.rows;
+        
+        // Mapeamos las columnas basándonos en tu nueva estructura
+        inventarioProductos = filas.map(fila => {
+            return {
+                id: fila.c[0] ? fila.c[0].v : "",
+                nombre: fila.c[1] ? fila.c[1].v : "",
+                precio: fila.c[2] ? fila.c[2].v : 0,
+                foto1: fila.c[3] ? fila.c[3].v : "",
+                foto2: fila.c[4] ? fila.c[4].v : "",
+                foto3: fila.c[5] ? fila.c[5].v : ""
+            };
+        });
+
+        // Colocamos la cantidad inicial de cada prenda en 1
+        inventarioProductos.forEach(p => {
+            cantidades[p.id] = 1;
+        });
+
+        // Dibujamos la tienda en la pantalla
+        dibujarCatalogo();
+
+    } catch (error) {
+        console.error("Error cargando la base de datos:", error);
+    }
+}
+
+// 3. Función que fabrica las tarjetas premium en la pantalla
+function dibujarCatalogo() {
+    const contenedor = document.getElementById("contenedor-productos");
+    contenedor.innerHTML = ""; 
+
+    inventarioProductos.forEach(producto => {
+        // Creamos la hilera de miniaturas disponibles de forma dinámica
+        let miniaturasHTML = `<img src="${producto.foto1}" onclick="cambiarFoto('${producto.id}', this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #aa7c7c;">`;
+        
+        if(producto.foto2) {
+            miniaturasHTML += `<img src="${producto.foto2}" onclick="cambiarFoto('${producto.id}', this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;">`;
+        }
+        if(producto.foto3) {
+            miniaturasHTML += `<img src="${producto.foto3}" onclick="cambiarFoto('${producto.id}', this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;">`;
+        }
+
+        // Diseño premium de la tarjeta de producto
+        const tarjeta = `
+            <div class="producto-card" style="background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 15px; width: 320px; text-align: center; font-family: Arial, sans-serif; margin-bottom: 20px;">
+                <img id="foto-principal-${producto.id}" src="${producto.foto1}" alt="${producto.nombre}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
+                
+                <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+                    ${miniaturasHTML}
+                </div>
+
+                <h3 style="margin: 15px 0 5px 0; color: #333; font-size: 1.2rem;">${producto.nombre}</h3>
+                <p style="margin: 0 0 15px 0; color: #aa7c7c; font-weight: bold;">Precio: $${producto.precio.toLocaleString('es-CO')} COP</p>
+                
+                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px;">
+                    <button onclick="modificarCantidad('${producto.id}', -1)" style="background: #aa7c7c; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center;">-</button>
+                    <span id="contador-${producto.id}" style="font-size: 1.1rem; font-weight: bold;">1</span>
+                    <button onclick="modificarCantidad('${producto.id}', 1)" style="background: #aa7c7c; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center;">+</button>
+                </div>
+
+                <button onclick="enviarPedido('${producto.id}')" style="background: #25d366; color: white; border: none; padding: 12px 20px; border-radius: 25px; width: 100%; font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    Pedir por WhatsApp 💬
+                </button>
+            </div>
+        `;
+        
+        contenedor.innerHTML += tarjeta;
+    });
+}
+
+// 4. Funciones de control inteligentes
+function cambiarFoto(idProducto, nuevaUrl) {
+    document.getElementById(`foto-principal-${idProducto}`).src = nuevaUrl;
+}
+
+function modificarCantidad(idProducto, cambio) {
+    let nuevaCantidad = cantidades[idProducto] + cambio;
+    if (nuevaCantidad >= 1) {
+        cantidades[idProducto] = nuevaCantidad;
+        document.getElementById(`contador-${idProducto}`).innerText = nuevaCantidad;
+    }
+}
+
+function enviarPedido(idProducto) {
+    const producto = inventarioProductos.find(p => p.id === idProducto);
+    const cantidad = cantidades[idProducto];
+    const telefono = "573014816594"; 
     
-    // Aquí puedes poner el límite real de tu stock (por ejemplo, 3 unidades de este conjunto)
-    let stockMaximo = 3; 
+    const mensaje = `¡Hola, IntimateGem! ✨ Me encantaría comprar ${cantidad} unidad(es) del producto: *${producto.nombre}*.`;
+    const url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+    window.open(url, '_blank');
+}
 
-    // Esta función se activa cuando la clienta hunde el botón "+"
-    function sumar() {
-        if (cantidad < stockMaximo) {
-            cantidad = cantidad + 1;
-            document.getElementById("contador").innerText = cantidad;
-        } else {
-            alert("✨ Lo sentimos, no nos quedan más unidades de este conjunto en stock.");
-        }
-    }
-
-    // Esta función se activa cuando la clienta hunde el botón "-"
-    function restar() {
-        if (cantidad > 1) {
-            cantidad = cantidad - 1;
-            document.getElementById("contador").innerText = cantidad;
-        }
-    }
-    // Esta función arma el mensaje de compra y abre el WhatsApp de tu tienda
-    function enviarPedido() {
-        let telefono = "573014816594"; 
-        let mensaje = "¡Hola, IntimateGem! ✨ Me encantaría comprar " + cantidad + " unidad(es) del Conjunto Encaje Premium. 👙";
-        let url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
-        window.open(url, '_blank');
-    }
-// --- CEREBRO PRODUCTO 2 ---
-    let cantidad2 = 1; 
-    let stockMaximo2 = 4; // Pon aquí el stock real de este segundo modelo
-
-    function sumar2() {
-        if (cantidad2 < stockMaximo2) {
-            cantidad2 = cantidad2 + 1;
-            document.getElementById("contador2").innerText = cantidad2;
-        } else {
-            alert("✨ Lo sentimos, no nos quedan más unidades de este modelo en stock.");
-        }
-    }
-
-    function restar2() {
-        if (cantidad2 > 1) {
-            cantidad2 = cantidad2 - 1;
-            document.getElementById("contador2").innerText = cantidad2;
-        }
-    }
-
-    function enviarPedido2() {
-        let telefono = "573014816594"; // Tu número real
-        let mensaje = "¡Hola, IntimateGem! ✨ Me encantaría comprar " + cantidad2 + " unidad(es) del Conjunto Encaje Satín. 👙";
-        let url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
-        window.open(url, '_blank');
-    }
-
-    function cambiarFoto2(nuevaUrl) {
-        document.getElementById("foto-principal2").src = nuevaUrl;
-    }
-    </script>
+// 5. Encendemos el motor automático al cargar la página
+window.onload = cargarTiendaAutomatica;
+    
+</script>
 </body>
 </html>
