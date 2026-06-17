@@ -247,7 +247,7 @@
             const filas = datos.table.rows;
 
             inventarioProductos = filas.map(f => ({
-                descripcion: f.c[3]?.v || ""
+                descripcion: f.c[2]?.v || "",
                 id: f.c[0]?.v || "",
                 nombre: f.c[1]?.v || "",
                 precio: f.c[2]?.v || 0,
