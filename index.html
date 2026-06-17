@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntimateGem.col</title>
+<style>
+    /* Configuramos el fondo de la página y la letra */
+    body {
+        background-color: #fcf8f5; /* Un tono crema muy suave y elegante */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333333;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Ponemos el título principal hermoso */
+    h1 {
+        color: #aa7c7c; /* Un rosa viejo / rose gold opaco muy sofisticado */
+        font-size: 2.5rem;
+        margin-bottom: 5px;
+    }
+
+    /* Diseñamos la tarjeta del producto */
+    .producto-card {
+        background-color: #ffffff;
+        border: none !important; /* Quitamos ese borde gris feo de ayer */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Una sombra suave de boutique premium */
+        padding: 25px;
+        width: 320px;
+        border-radius: 12px;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    /* Redondeamos las esquinas de la foto */
+    .producto-card img {
+        border-radius: 8px;
+    }
+
+    /* Estilo premium para los botones de + y - */
+    .btn-cantidad {
+        background-color: #aa7c7c;
+        color: white;
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%; /* Botones completamente redondos */
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-cantidad:hover {
+        background-color: #8f6262; /* Se oscurece un poquito al pasar el mouse */
+    }
+</style>
+</head>
+<body>
+   <h1>Bienvenida a IntimateGem.col</h1>
+<p>Lencería exclusiva y piezas únicas para resaltar tu brillo natural. ✨</p>
+<div class="producto-card">
+    <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300" alt="Conjunto de Lencería Premium" width="100%">
+    
+    <h3>Conjunto Encaje Premium</h3>
+    <p>Precio: $75.000 COP</p>
+
+    <div>
+        <button class="btn-cantidad" onclick="restar()">-</button>
+        <span id="contador" style="margin: 0 15px; font-weight: bold;">1</span>
+        <button class="btn-cantidad" onclick="sumar()">+</button>
+    </div>
+    <button onclick="enviarPedido()" style="background-color: #25D366; color: white; border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 25px; margin-top: 20px; cursor: pointer; width: 100%; transition: 0.3s;">
+    Pedir por WhatsApp 💬
+</button>
+</div>
+
+<div class="producto-card">
+    <img id="foto-principal2" src="https://lh3.googleusercontent.com/d/1UrR48WwMKReL9WLMHBOyQsT8Ji4GD_-w" alt="Goddess Set" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
+<<div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+    <img src="https://lh3.googleusercontent.com/d/1UrR48WwMKReL9WLMHBOyQsT8Ji4GD_-w" onclick="cambiarFoto2(this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #aa7c7c;">
+    
+    <img src="https://lh3.googleusercontent.com/d/1J1NrItNXd9eq5zemX3DKKitDr33SrcSa" onclick="cambiarFoto2(this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;">
+    
+    <img src="https://lh3.googleusercontent.com/d/1UrR48WwMKReL9WLMHBOyQsT8Ji4GD_-w" onclick="cambiarFoto2(this.src)" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd;">
+</div>
+    <h3>Goddess Set</h3>
+    <p>Precio: $45.000 COP</p>
+
+    <div>
+        <button class="btn-cantidad" onclick="restar2()">-</button>
+        <span id="contador2" style="margin: 0 15px; font-weight: bold;">1</span>
+        <button class="btn-cantidad" onclick="sumar2()">+</button>
+    </div>
+
+    <button onclick="enviarPedido2()" style="background-color: #25D366; color: white; border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 25px; margin-top: 20px; cursor: pointer; width: 100%; transition: 0.3s;">
+        Pedir por WhatsApp 💬
+    </button>
+</div>
+
+<script>
+    // Empezamos con 1 prenda seleccionada
+    let cantidad = 1; 
+    
+    // Aquí puedes poner el límite real de tu stock (por ejemplo, 3 unidades de este conjunto)
+    let stockMaximo = 3; 
+
+    // Esta función se activa cuando la clienta hunde el botón "+"
+    function sumar() {
+        if (cantidad < stockMaximo) {
+            cantidad = cantidad + 1;
+            document.getElementById("contador").innerText = cantidad;
+        } else {
+            alert("✨ Lo sentimos, no nos quedan más unidades de este conjunto en stock.");
+        }
+    }
+
+    // Esta función se activa cuando la clienta hunde el botón "-"
+    function restar() {
+        if (cantidad > 1) {
+            cantidad = cantidad - 1;
+            document.getElementById("contador").innerText = cantidad;
+        }
+    }
+    // Esta función arma el mensaje de compra y abre el WhatsApp de tu tienda
+    function enviarPedido() {
+        let telefono = "573014816594"; 
+        let mensaje = "¡Hola, IntimateGem! ✨ Me encantaría comprar " + cantidad + " unidad(es) del Conjunto Encaje Premium. 👙";
+        let url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+        window.open(url, '_blank');
+    }
+// --- CEREBRO PRODUCTO 2 ---
+    let cantidad2 = 1; 
+    let stockMaximo2 = 4; // Pon aquí el stock real de este segundo modelo
+
+    function sumar2() {
+        if (cantidad2 < stockMaximo2) {
+            cantidad2 = cantidad2 + 1;
+            document.getElementById("contador2").innerText = cantidad2;
+        } else {
+            alert("✨ Lo sentimos, no nos quedan más unidades de este modelo en stock.");
+        }
+    }
+
+    function restar2() {
+        if (cantidad2 > 1) {
+            cantidad2 = cantidad2 - 1;
+            document.getElementById("contador2").innerText = cantidad2;
+        }
+    }
+
+    function enviarPedido2() {
+        let telefono = "573014816594"; // Tu número real
+        let mensaje = "¡Hola, IntimateGem! ✨ Me encantaría comprar " + cantidad2 + " unidad(es) del Conjunto Encaje Satín. 👙";
+        let url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+        window.open(url, '_blank');
+    }
+
+    function cambiarFoto2(nuevaUrl) {
+        document.getElementById("foto-principal2").src = nuevaUrl;
+    }
+    </script>
+</body>
+</html>
