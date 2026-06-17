@@ -247,6 +247,7 @@
             const filas = datos.table.rows;
 
             inventarioProductos = filas.map(f => ({
+                descripcion: f.c[3]?.v || ""
                 id: f.c[0]?.v || "",
                 nombre: f.c[1]?.v || "",
                 precio: f.c[2]?.v || 0,
@@ -281,7 +282,8 @@
                     </div>
 
                     <h3>${p.nombre}</h3>
-                    <div class="precio">$${p.precio.toLocaleString('es-CO')} COP</div>
+<p style="font-size: 0.9rem; color: #666; margin: 5px 0; font-style: italic;">${p.descripcion}</p>
+<div class="precio">$${p.precio.toLocaleString('es-CO')} COP</div>
 
                     <div class="controles-cantidad">
                         <button class="btn-cantidad" onclick="cambiarCant('${p.id}', -1)">-</button>
