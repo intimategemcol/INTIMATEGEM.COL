@@ -3,37 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>IntimateGem.col</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; padding: 20px; font-family: 'Poppins', sans-serif; text-align: center; background-color: #ffffff; }
-        h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #8b5d5d; margin: 0; }
-        .eslogan { color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 50px; }
+        body { margin: 0; padding: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 80px; }
+        h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #8b5d5d; margin: 0; line-height: 1; }
+        .eslogan { font-size: 1.4rem; color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; font-weight: 300; }
         
-        #contenedor-productos { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .producto { width: 300px; padding: 20px; border: 1px solid #eee; border-radius: 15px; }
-        .producto img { width: 100%; border-radius: 10px; }
+        .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 50px; flex-wrap: wrap; }
+        .producto-card { width: 300px; text-align: left; border: 1px solid #eee; padding: 20px; border-radius: 15px; }
+        .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #5a3e3e; margin-bottom: 5px; }
+        .producto-desc { font-size: 0.9rem; color: #777; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <h1>IntimateGem.col ✨</h1>
-    <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
-
-    <div id="contenedor-productos">
-        <!-- Producto 1 -->
-        <div class="producto">
-            <img src="https://lh3.googleusercontent.com/d/1NirUkwXblq43lfWtSjXfldVYrL824hiP" alt="Goddess Set">
-            <h3>Goddess Set</h3>
-            <p>$45000</p>
-        </div>
-
-        <!-- Producto 2 -->
-        <div class="producto">
-            <img src="https://lh3.googleusercontent.com/d/1NirUkwXblq43lfWtSjXfldVYrL824hiP" alt="Nova Set">
-            <h3>Nova Set</h3>
-            <p>$22000</p>
-        </div>
+    <div class="header-container">
+        <h1>IntimateGem.col ✨</h1>
+        <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
     </div>
 
+    <div class="productos-grid" id="lista-productos">Cargando catálogo...</div>
+
+    <script>
+        // Tu ID de hoja de cálculo
+        const sheetID = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
+        const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+
+        fetch(url)
+            .then(res => res.text())
+            .then(data => {
+                const json = JSON.parse(data.substr(47).slice(0, -2));
+                const contenedor = document.getElementById('lista-productos');
+                contenedor.innerHTML = ""; // Limpiar mensaje de carga
+
+                json.table.rows.forEach(row => {
+                    const nombre = row.c[1]?.v;
+                    const precio = row.c[2]?.v;
+                    const desc = row.c[7]?.v;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'producto-card';
+                    card.innerHTML = `
+                        <div class="producto-nombre">${nombre}</div>
+                        <div class="producto-desc">${desc}</div>
+                        <div style="font-weight: bold; color:#8b5d5d;">$${precio.toLocaleString()}</div>
+                    `;
+                    contenedor.appendChild(card);
+                });
+            });
+    </script>
 </body>
 </html>
