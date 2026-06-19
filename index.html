@@ -18,12 +18,11 @@
         select { padding: 5px 10px; border: 1px solid #ccc; border-radius: 5px; color: #5a3e3e; }
         .btn-carrito { background-color: #8b5d5d; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; width: 100%; }
         
-        /* Carrito Mejorado */
+        /* Carrito con imágenes */
         #carrito-flotante { position: fixed; bottom: 20px; right: 20px; background: #5a3e3e; color: white; padding: 15px; border-radius: 15px; cursor: pointer; z-index: 1000; }
-        #lista-carrito { display: none; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 15px; border-radius: 10px; width: 320px; z-index: 1000; text-align: left; max-height: 400px; overflow-y: auto; }
+        #lista-carrito { display: none; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 15px; border-radius: 10px; width: 300px; z-index: 1000; text-align: left; max-height: 400px; overflow-y: auto; }
         .item-carrito { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .item-carrito img { width: 40px; height: 40px; object-fit: cover; border-radius: 5px; }
-        .btn-control { cursor: pointer; padding: 2px 8px; background: #eee; border: none; border-radius: 4px; }
         .btn-eliminar { color: red; cursor: pointer; font-weight: bold; margin-left: auto; }
     </style>
 </head>
@@ -63,22 +62,23 @@
                     <div class="producto-nombre">${nombre}</div>
                     <div class="opciones-compra">
                         <select id="talla-${index}">${tallas.map(t => `<option value="${t}">${t}</option>`).join('')}</select>
+                        <select id="cant-${index}"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
                     </div>
-                    <button class="btn-carrito" onclick="agregarAlCarrito('${nombre}', ${precio}, 'talla-${index}', '${f1}')">Agregar al Carrito</button>
+                    <button class="btn-carrito" onclick="agregarAlCarrito('${nombre}', ${precio}, 'talla-${index}', 'cant-${index}', '${f1}')">Agregar</button>
                 `;
                 container.appendChild(card);
             });
         });
 
-        function agregarAlCarrito(nombre, precio, idTalla, img) {
+        function agregarAlCarrito(nombre, precio, idTalla, idCant, img) {
             const talla = document.getElementById(idTalla).value;
-            carrito.push({ nombre, precio, talla, cant: 1, img });
+            const cant = document.getElementById(idCant).value;
+            carrito.push({ nombre, precio, talla, cant, img });
             actualizarLista();
         }
 
-        function cambiarCantidad(index, delta) {
-            carrito[index].cant += delta;
-            if (carrito[index].cant <= 0) carrito.splice(index, 1);
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
             actualizarLista();
         }
 
@@ -88,13 +88,8 @@
             lista.innerHTML = carrito.map((i, index) => `
                 <div class="item-carrito">
                     <img src="${i.img}">
-                    <div>
-                        ${i.nombre} (${i.talla})<br>
-                        <button class="btn-control" onclick="cambiarCantidad(${index}, -1)">-</button>
-                        ${i.cant}
-                        <button class="btn-control" onclick="cambiarCantidad(${index}, 1)">+</button>
-                    </div>
-                    <span class="btn-eliminar" onclick="carrito.splice(${index},1); actualizarLista();">X</span>
+                    <div>${i.nombre} (${i.talla}) x${i.cant}</div>
+                    <span class="btn-eliminar" onclick="eliminarDelCarrito(${index})">X</span>
                 </div>
             `).join('');
         }
