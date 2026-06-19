@@ -9,40 +9,41 @@
         h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #8b5d5d; margin: 0; line-height: 1; }
         .eslogan { font-size: 1.4rem; color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; margin-bottom: 50px; font-weight: 300; }
         
+        /* Productos */
         .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 20px; flex-wrap: wrap; }
-        .producto-card { width: 300px; border: 1px solid #eee; padding: 20px; border-radius: 15px; transition: opacity 0.3s; }
-        .producto-card.agotado { opacity: 0.6; filter: grayscale(0.5); }
-        
+        .producto-card { width: 300px; border: 1px solid #eee; padding: 20px; border-radius: 15px; }
         .img-principal { width: 100%; height: 300px; object-fit: cover; border-radius: 10px; cursor: zoom-in; }
         .galeria-mini { display: flex; gap: 5px; margin: 10px 0; justify-content: center; }
         .mini { width: 60px; height: 60px; object-fit: cover; cursor: pointer; border: 1px solid #ddd; border-radius: 5px; }
-        
-        .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #5a3e3e; text-align: center; margin: 10px 0; }
-        .producto-desc { font-size: 0.9rem; color: #777; margin-bottom: 15px; min-height: 40px; }
-        
-        .opciones-compra { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        select { padding: 5px 10px; border: 1px solid #ccc; border-radius: 5px; color: #5a3e3e; outline: none; font-size: 0.8rem; }
-        
-        .badge-agotado { color: #d9534f; font-weight: bold; font-size: 1.2rem; margin: 10px 0; }
+        .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #5a3e3e; margin: 10px 0; }
+        .btn-add { background: #8b5d5d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
 
-        #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999; }
-        #lightbox img { max-width: 90%; max-height: 80%; margin-top: 5%; border-radius: 10px; }
-        .cerrar-zoom { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; }
+        /* Carrito flotante */
+        #cart-icon { position: fixed; top: 20px; right: 20px; font-size: 24px; cursor: pointer; background: #fdfaf8; padding: 10px; border-radius: 50%; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        #cart-drawer { display: none; position: fixed; top: 0; right: 0; width: 350px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); padding: 20px; z-index: 1000; overflow-y: auto; }
+        
+        /* Elementos del carrito */
+        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 10px 0; }
+        .btn-ws { display: block; background: #25d366; color: white; text-decoration: none; padding: 15px; border-radius: 5px; margin-top: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h1>IntimateGem.col ✨</h1>
-    <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
-
-    <div class="productos-grid" id="lista-productos">Cargando catálogo...</div>
-
-    <div id="lightbox" onclick="this.style.display='none'">
-        <span class="cerrar-zoom">&times;</span>
-        <img id="zoom-img" src="">
+    <div id="cart-icon" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+    
+    <div id="cart-drawer">
+        <span onclick="toggleCart()" style="cursor:pointer; font-size: 24px;">&times;</span>
+        <h2>Tu Selección</h2>
+        <div id="cart-items"></div>
+        <a href="#" id="whatsapp-link" class="btn-ws">Pedir por WhatsApp</a>
     </div>
 
+    <h1>IntimateGem.col ✨</h1>
+    <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
+    <div class="productos-grid" id="lista-productos">Cargando...</div>
+
     <script>
+        let cart = [];
         const sheetID = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
         const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
@@ -54,41 +55,51 @@
             json.table.rows.forEach(row => {
                 const nombre = row.c[1]?.v;
                 const precio = row.c[2]?.v;
-                const f1 = row.c[3]?.v, f2 = row.c[4]?.v, f3 = row.c[5]?.v;
-                const estado = (row.c[6]?.v || "").toLowerCase();
-                const desc = row.c[7]?.v || "";
-                const tallasRaw = row.c[8]?.v || "U";
-                const tallas = tallasRaw.split(', ');
-
-                const isAgotado = estado === "agotado";
-
+                const f1 = row.c[3]?.v;
                 const card = document.createElement('div');
-                card.className = `producto-card ${isAgotado ? 'agotado' : ''}`;
+                card.className = 'producto-card';
                 card.innerHTML = `
-                    <img src="${f1}" class="img-principal" onclick="abrirZoom('${f1}')" id="main-${nombre.replace(/\s+/g, '')}">
-                    <div class="galeria-mini">
-                        <img src="${f1}" class="mini" onclick="cambiarFoto('${nombre.replace(/\s+/g, '')}', '${f1}')">
-                        <img src="${f2}" class="mini" onclick="cambiarFoto('${nombre.replace(/\s+/g, '')}', '${f2}')">
-                        <img src="${f3}" class="mini" onclick="cambiarFoto('${nombre.replace(/\s+/g, '')}', '${f3}')">
-                    </div>
+                    <img src="${f1}" class="img-principal">
                     <div class="producto-nombre">${nombre}</div>
-                    <div class="producto-desc">${desc}</div>
-                    ${isAgotado ? '<div class="badge-agotado">AGOTADO</div>' : `
-                        <div class="opciones-compra">
-                            <select>${tallas.map(t => `<option value="${t}">${t}</option>`).join('')}</select>
-                            <select><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
-                        </div>
-                    `}
-                    <div style="font-weight: bold; color:#8b5d5d; margin-bottom:10px;">$${precio.toLocaleString()}</div>
+                    <div style="font-weight: bold;">$${precio.toLocaleString()}</div>
+                    <button class="btn-add" onclick="addToCart('${nombre}', ${precio})">Añadir al carrito</button>
                 `;
                 container.appendChild(card);
             });
         });
 
-        function cambiarFoto(id, src) { document.getElementById(`main-${id}`).src = src; }
-        function abrirZoom(src) { 
-            document.getElementById('zoom-img').src = src; 
-            document.getElementById('lightbox').style.display = 'block'; 
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function addToCart(nombre, precio) {
+            cart.push({ nombre, precio });
+            document.getElementById('cart-count').innerText = cart.length;
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            container.innerHTML = "";
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.precio;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.nombre} - $${item.precio}</span>
+                        <button onclick="removeFromCart(${index})">Eliminar</button>
+                    </div>
+                `;
+            });
+            const msg = `Hola, quiero pedir: ${cart.map(i => i.nombre).join(', ')}. Total: $${total}`;
+            document.getElementById('whatsapp-link').href = `https://wa.me/573000000000?text=${encodeURIComponent(msg)}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            document.getElementById('cart-count').innerText = cart.length;
+            updateCartUI();
         }
     </script>
 </body>
