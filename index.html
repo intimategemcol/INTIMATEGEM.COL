@@ -10,10 +10,15 @@
         .eslogan { font-size: 1.4rem; color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; font-weight: 300; }
         
         .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 50px; flex-wrap: wrap; }
-        .producto-card { width: 300px; text-align: left; border: 1px solid #eee; padding: 20px; border-radius: 15px; }
-        /* Ajuste para que la imagen se vea bonita */
-        .producto-img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
-        .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #5a3e3e; margin-bottom: 5px; }
+        .producto-card { width: 320px; text-align: center; border: 1px solid #eee; padding: 20px; border-radius: 15px; }
+        
+        /* Imágenes */
+        .producto-img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
+        .galeria-extra { display: flex; gap: 5px; margin-bottom: 15px; }
+        .mini-img { width: 33%; height: 60px; object-fit: cover; border-radius: 5px; }
+        
+        /* Centrado y tipografía */
+        .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #5a3e3e; margin: 10px 0; }
         .producto-desc { font-size: 0.9rem; color: #777; margin-bottom: 10px; min-height: 40px; }
     </style>
 </head>
@@ -40,13 +45,20 @@
                 json.table.rows.forEach(row => {
                     const nombre = row.c[1]?.v;
                     const precio = row.c[2]?.v;
-                    const foto = row.c[3]?.v; // Columna D (foto1)
-                    const desc = row.c[7]?.v || ""; // Columna H (descripcion)
+                    const f1 = row.c[3]?.v;
+                    const f2 = row.c[4]?.v;
+                    const f3 = row.c[5]?.v;
+                    const desc = row.c[7]?.v || "";
                     
                     const card = document.createElement('div');
                     card.className = 'producto-card';
                     card.innerHTML = `
-                        <img src="${foto}" class="producto-img" alt="${nombre}">
+                        <img src="${f1}" class="producto-img" alt="${nombre}">
+                        <div class="galeria-extra">
+                            <img src="${f1}" class="mini-img">
+                            <img src="${f2}" class="mini-img">
+                            <img src="${f3}" class="mini-img">
+                        </div>
                         <div class="producto-nombre">${nombre}</div>
                         <div class="producto-desc">${desc}</div>
                         <div style="font-weight: bold; color:#8b5d5d;">$${precio.toLocaleString()}</div>
