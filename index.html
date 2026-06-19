@@ -2,269 +2,54 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IntimateGem.col | Boutique Premium</title>
-    <!-- Fuentes Elegantes -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>IntimateGem.col</title>
     <style>
-        /* ESTILOS DE LA BOUTIQUE (Look & Feel) */
-        :root { --color-primary: #aa7c7c; --color-bg: #fcf8f5; --color-text: #4a3737; --color-accent: #aa7c7c1a; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--color-bg); color: var(--color-text); margin: 0; padding: 20px;
-            /* Fondo Floral Delicado */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><g fill="%23aa7c7c" fill-opacity="0.05"><path d="M50 20c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm0 15c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z"/><path d="M30 60c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm0 15c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z"/><path d="M70 60c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm0 15c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z"/></g></svg>');
-        }
-        h1.titulo-boutique { font-family: 'Playfair Display', serif; text-align: center; color: var(--color-primary); font-size: 2.5rem; margin-bottom: 5px; }
-        p.subtitulo { font-family: 'Poppins', sans-serif; font-weight: 300; text-align: center; color: var(--color-primary); margin-top: 0; font-size: 1rem; opacity: 0.8; margin-bottom: 40px;}
-        
-        /* Contenedor de Productos */
-        #contenedor-productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
-        
-        /* Tarjeta de Producto Sophisticated */
-        .producto-card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(170,124,124,0.08); transition: transform 0.3s ease; display: flex; flex-direction: column; align-items: center; border: 1px solid rgba(170,124,124,0.05); }
-        .producto-card:hover { transform: translateY(-5px); }
-        .foto-principal { width: 100%; height: 320px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
-        .producto-detalles { width: 100%; text-align: center; }
-        .producto-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--color-text); margin: 0 0 10px 0; }
-        .producto-card .precio { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--color-primary); font-weight: 700; margin: 10px 0; }
-        
-        /* Controles de Talla y Cantidad */
-        .controles-compra { width: 100%; display: flex; gap: 10px; margin: 15px 0; justify-content: center; }
-        .control-estilizado { font-family: 'Poppins', sans-serif; padding: 10px; border-radius: 10px; border: 1px solid rgba(170,124,124,0.2); background-color: white; color: var(--color-text); font-size: 0.9rem; flex: 1; text-align: center; max-width: 120px;}
-        .control-estilizado:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 5px rgba(170,124,124,0.2); }
-        
-        /* Botones Pro */
-        .btn-pro { font-family: 'Poppins', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; padding: 12px 20px; border-radius: 25px; border: none; cursor: pointer; transition: all 0.3s ease; width: 100%; }
-        .btn-agregar { background-color: var(--color-accent); color: var(--color-primary); }
-        .btn-agregar:hover { background-color: #f6e6e6; }
-        .btn-whatsapp { background-color: var(--color-primary); color: white; margin-top: 20px; }
-        .btn-whatsapp:hover { background-color: #926868; }
-        .btn-cerrar { background-color: #eee; color: #666; margin-top: 10px; width: auto; padding: 10px 20px; font-size: 0.75rem;}
-
-        /* Icono Carrito Flotante (Como el de tu imagen) */
-        #icono-carrito-flotante { position: fixed; bottom: 30px; right: 30px; background-color: var(--color-primary); color: white; padding: 18px; border-radius: 50%; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; z-index: 999; }
-        #icono-carrito-flotante svg { width: 24px; height: 24px; fill: white; }
-        #contador-carrito { position: absolute; top: -5px; right: -5px; background-color: white; color: var(--color-primary); font-size: 0.7rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
-        /* Panel Lateral del Carrito (Modal) */
-        #modal-carrito { display:none; position:fixed; top:0; right:-400px; width: 350px; height: 100vh; background: white; padding: 30px; box-shadow: -5px 0 30px rgba(0,0,0,0.1); z-index: 1000; transition: right 0.3s ease; display: flex; flex-direction: column; overflow-y: auto;}
-        #modal-carrito.abierto { display: flex; right: 0; }
-        #overlay-carrito { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.3); z-index: 999; }
-        #overlay-carrito.abierto { display: block; }
-        #modal-carrito h3 { font-family: 'Playfair Display', serif; color: var(--color-text); margin-top: 0; }
-        .item-carrito-resumen { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
-        .item-carrito-resumen img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; }
-        .item-detalles-resumen { flex: 1; }
-        .item-detalles-resumen p { margin: 0; font-size: 0.9rem; }
-        .item-nombre { font-weight: 600; color: var(--color-text); }
-        .item-meta { color: #888; font-size: 0.8rem !important; }
-        .item-precio-resumen { font-weight: 600; color: var(--color-primary); }
-        .btn-borrar { background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 1.2rem; padding: 0 10px; }
-        #total-pedido-carrito { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--color-primary); text-align: right; margin-top: auto; border-top: 2px solid var(--color-accent); padding-top: 15px; }
-
-        /* Responsive */
-        @media (max-width: 600px) { #modal-carrito { width: 100%; right: -100%; } h1.titulo-boutique { font-size: 2rem; } #contenedor-productos { grid-template-columns: 1fr; } }
+        body { background: #fcf8f5; font-family: sans-serif; margin: 0; padding: 20px; }
+        #contenedor-productos { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 50px; }
+        .producto-card { background: white; padding: 15px; border-radius: 15px; width: 250px; text-align: center; }
+        .producto-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
+        #modal-carrito { display:none; position:fixed; top:0; right:0; width:300px; height:100%; background:white; z-index:9999; padding:20px; box-shadow:-5px 0 10px rgba(0,0,0,0.1); }
+        #modal-carrito.activo { display:block; }
     </style>
 </head>
 <body>
 
-    <h1 class="titulo-boutique">IntimateGem.col</h1>
-    <p class="subtitulo">Boutique Premium</p>
+    <h1 style="text-align:center;">IntimateGem.col</h1>
+    <div id="contenedor-productos">Cargando catálogo...</div>
+    <div id="icono-carrito" onclick="document.getElementById('modal-carrito').classList.add('activo')" style="position:fixed; bottom:20px; right:20px; background:#aa7c7c; color:white; padding:15px; border-radius:50px; cursor:pointer;">🛒</div>
 
-    <!-- Contenedor donde se cargarán los productos -->
-    <div id="contenedor-productos"></div>
-
-    <!-- Icono Flotante del Carrito -->
-    <div id="icono-carrito-flotante" onclick="alternarCarrito()">
-        <svg viewBox="0 0 24 24"><path d="M17 18c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm1.75-2.24l-.03.12c0 .14.11.25.25.25h12c.55 0 1-.45 1-1s-.45-1-1-1H9.42l-.94-2H18.5c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.18 14.1 4.5 15 5.25 15H17v-2H6.42l1.33-2.24z"/></svg>
-        <div id="contador-carrito">0</div>
-    </div>
-
-    <!-- Panel Lateral del Carrito (Modal) -->
-    <div id="overlay-carrito" onclick="alternarCarrito()"></div>
     <div id="modal-carrito">
-        <h3>Tu Selección</h3>
-        <div id="lista-detallada-carrito">
-            <p style="color: #888; font-size: 0.9rem;">Tu pedido está vacío...</p>
-        </div>
-        <p id="total-pedido-carrito"></p>
-        <button class="btn-pro btn-whatsapp" onclick="enviarWhatsApp()">Finalizar Pedido por WhatsApp 💬</button>
-        <button class="btn-pro btn-cerrar" onclick="alternarCarrito()">Seguir comprando</button>
+        <h3>Tu pedido</h3>
+        <div id="lista-carrito"></div>
+        <button onclick="document.getElementById('modal-carrito').classList.remove('activo')">Cerrar</button>
     </div>
 
 <script>
-    // CONFIGURACIÓN DE TU GOOGLE SHEETS (Mantén tu ID)
-    const idHoja = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
-    const urlGSheets = `https://docs.google.com/spreadsheets/d/${idHoja}/gviz/tq?tqx=out:json`;
+    const url = "https://docs.google.com/spreadsheets/d/1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg/gviz/tq?tqx=out:json";
 
-    // VARIABLES DE ESTADO
-    let inventario = [];
-    let carrito = JSON.parse(localStorage.getItem('carritoIntimateGem')) || []; // Recuperar carrito guardado
-    actualizarContador();
-
-    // 1. CARGAR DATOS DE LA TIENDA
-    async function cargarTienda() {
+    async function cargar() {
         try {
-            const respuesta = await fetch(urlGSheets);
-            const textoJSON = await respuesta.text();
-            // Limpiar JSON de GSheets
-            const datos = JSON.parse(textoJSON.substr(47).slice(0, -2));
-            // Mapear filas a objetos limpios
-            inventario = datos.table.rows.map(f => ({
-                id: f.c[0]?.v,
-                nombre: f.c[1]?.v,
-                precio: f.c[2]?.v, 
-                foto1: f.c[3]?.v, 
-                estado: f.c[6]?.v, 
-                tallas: f.c[8]?.v ? f.c[8].v.split(',').map(t => t.trim()) : ['U'] // Leer columna de tallas
-            })).filter(p => p.estado === 'Disponible'); // Solo mostrar disponibles
+            const res = await fetch(url);
+            const text = await res.text();
+            const json = JSON.parse(text.substr(47).slice(0, -2));
+            const contenedor = document.getElementById("contenedor-productos");
+            contenedor.innerHTML = ""; 
             
-            dibujarProductos();
-        } catch (error) {
-            console.error("Error cargando la tienda:", error);
-            document.getElementById("contenedor-productos").innerHTML = "<p>Error cargando los productos. Revisa la conexión.</p>";
+            json.table.rows.forEach(f => {
+                if(!f.c[1]) return;
+                contenedor.innerHTML += `
+                    <div class="producto-card">
+                        <img src="${f.c[3]?.v}">
+                        <h3>${f.c[1]?.v}</h3>
+                        <p>$${f.c[2]?.v}</p>
+                        <button onclick="alert('Agregado')">Agregar</button>
+                    </div>`;
+            });
+        } catch(e) {
+            document.getElementById("contenedor-productos").innerHTML = "Error al cargar datos. Verifica que tu hoja esté publicada en la web.";
         }
     }
-
-    // 2. DIBUJAR TARJETAS DE PRODUCTO
-    function dibujarProductos() {
-        const contenedor = document.getElementById("contenedor-productos");
-        contenedor.innerHTML = ""; // Limpiar
-        
-        inventario.forEach(p => {
-            const card = `
-                <div class="producto-card">
-                    <img src="${p.foto1}" class="foto-principal" alt="${p.nombre}">
-                    <div class="producto-detalles">
-                        <h3>${p.nombre}</h3>
-                        <p class="precio">$${p.precio.toLocaleString()} COP</p>
-                        
-                        <div class="controles-compra">
-                            <!-- Selector de Tallas estilizado -->
-                            <select id="talla-${p.id}" class="control-estilizado">
-                                ${p.tallas.map(t => `<option value="${t}">${t}</option>`).join('')}
-                            </select>
-                            
-                            <!-- Input de Cantidad estilizado -->
-                            <input type="number" id="cant-${p.id}" class="control-estilizado" value="1" min="1" max="10">
-                        </div>
-
-                        <button class="btn-pro btn-agregar" onclick="agregarProducto('${p.id}')">Añadir al Carrito</button>
-                    </div>
-                </div>`;
-            contenedor.innerHTML += card;
-        });
-    }
-
-    // 3. LOGICA DEL CARRITO
-    function agregarProducto(id) {
-        const p = inventario.find(i => i.id == id);
-        const tallaSeleccionada = document.getElementById(`talla-${id}`).value;
-        const cantidadSeleccionada = parseInt(document.getElementById(`cant-${id}`).value);
-
-        // Validar cantidad
-        if (cantidadSeleccionada < 1 || isNaN(cantidadSeleccionada)) { alert("Por favor, selecciona una cantidad válida."); return; }
-
-        // Comprobar si el producto con esa talla ya está en el carrito
-        const itemExistente = carrito.find(item => item.id == id && item.talla === tallaSeleccionada);
-
-        if (itemExistente) {
-            itemExistente.cantidad += cantidadSeleccionada;
-        } else {
-            carrito.push({ ...p, talla: tallaSeleccionada, cantidad: cantidadSeleccionada });
-        }
-
-        guardarCarrito();
-        actualizarContador();
-        dibujarResumenCarrito(); // Actualizar panel si está abierto
-        
-        // Notificación suave (puedes mejorar esto)
-        alert(`¡${p.nombre} (Talla ${tallaSeleccionada}) añadido al carrito!`);
-    }
-
-    function borrarItem(id, talla) {
-        carrito = carrito.filter(item => !(item.id == id && item.talla === talla));
-        guardarCarrito();
-        actualizarContador();
-        dibujarResumenCarrito();
-    }
-
-    function alternarCarrito() {
-        document.getElementById('modal-carrito').classList.toggle('abierto');
-        document.getElementById('overlay-carrito').classList.toggle('abierto');
-        if (document.getElementById('modal-carrito').classList.contains('abierto')) {
-            dibujarResumenCarrito();
-        }
-    }
-
-    function dibujarResumenCarrito() {
-        const contenedorLista = document.getElementById("lista-detallada-carrito");
-        const contenedorTotal = document.getElementById("total-pedido-carrito");
-        
-        if (carrito.length === 0) {
-            contenedorLista.innerHTML = `<p style="color: #888; font-size: 0.9rem; text-align:center;">Tu carrito está vacío...</p>`;
-            contenedorTotal.innerText = "";
-            return;
-        }
-
-        let htmlLista = "";
-        let total = 0;
-
-        carrito.forEach(item => {
-            const subtotal = item.precio * item.cantidad;
-            total += subtotal;
-            htmlLista += `
-                <div class="item-carrito-resumen">
-                    <img src="${item.foto1}" alt="${item.nombre}">
-                    <div class="item-detalles-resumen">
-                        <p class="item-nombre">${item.nombre}</p>
-                        <p class="item-meta">Talla: ${item.talla} | Cant: ${item.cantidad}</p>
-                        <p class="item-precio-resumen">$${subtotal.toLocaleString()} COP</p>
-                    </div>
-                    <button class="btn-borrar" onclick="borrarItem('${item.id}', '${item.talla}')">✕</button>
-                </div>`;
-        });
-
-        contenedorLista.innerHTML = htmlLista;
-        contenedorTotal.innerText = `Total: $${total.toLocaleString()} COP`;
-    }
-
-    function actualizarContador() {
-        // Sumar todas las cantidades
-        const totalItems = carrito.reduce((suma, item) => suma + item.cantidad, 0);
-        document.getElementById("contador-carrito").innerText = totalItems;
-    }
-
-    function guardarCarrito() { localStorage.setItem('carritoIntimateGem', JSON.stringify(carrito)); }
-
-    // 4. ENVIAR A WHATSAPP
-    function enviarWhatsApp() {
-        if (carrito.length === 0) { alert("Tu carrito está vacío."); return; }
-
-        const telefono = "573014816594"; // Tu número
-        let mensaje = "¡Hola IntimateGem! Quiero realizar un pedido:\n\n";
-        let total = 0;
-
-        carrito.forEach((item, index) => {
-            const subtotal = item.precio * item.cantidad;
-            total += subtotal;
-            mensaje += `${index + 1}. *${item.nombre}*\n`;
-            mensaje += `   Talla: ${item.talla}\n`;
-            mensaje += `   Cantidad: ${item.cantidad}\n`;
-            mensaje += `   Subtotal: $${subtotal.toLocaleString()} COP\n\n`;
-        });
-
-        mensaje += `-------------------\n`;
-        mensaje += `*Total del Pedido: $${total.toLocaleString()} COP*`;
-
-        const urlUrlWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-        window.open(urlUrlWhatsApp, '_blank');
-        
-        // Opcional: Vaciar carrito tras enviar
-        // carrito = []; guardarCarrito(); actualizarContador(); alternarCarrito();
-    }
-
-    // INICIAR
-    window.onload = cargarTienda;
+    cargar();
 </script>
 </body>
 </html>
