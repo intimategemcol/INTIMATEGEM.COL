@@ -5,15 +5,8 @@
     <title>IntimateGem.col</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* Fondo blanco con destellos */
-        body { 
-            margin: 0; 
-            background-color: #ffffff; 
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="10" y="40" font-size="20" fill="%238b5d5d" opacity="0.3">✨</text><text x="60" y="80" font-size="20" fill="%238b5d5d" opacity="0.3">✨</text></svg>');
-            text-align: center; 
-            font-family: 'Poppins', sans-serif; 
-            padding-top: 80px; 
-        }
+        /* Fondo blanco simple */
+        body { margin: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 80px; }
         
         h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #8b5d5d; margin: 0; line-height: 1; }
         .eslogan { font-size: 1.4rem; color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; margin-bottom: 50px; font-weight: 300; }
@@ -38,7 +31,6 @@
 
         #carrito-flotante { position: fixed; bottom: 25px; right: 25px; background: #8b5d5d; color: white; padding: 25px 30px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 6px 15px rgba(0,0,0,0.3); font-size: 1.5rem; font-weight: bold; }
         
-        /* Corregido: inicializado en display: none */
         #lista-carrito { display: none; position: fixed; bottom: 100px; right: 10px; width: 340px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); flex-direction: column; }
         #items-en-carrito { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; }
         
@@ -148,7 +140,6 @@
 
         function toggleCarrito() { 
             const car = document.getElementById('lista-carrito');
-            // Cambiado a flex si esta oculto, sino lo oculta
             car.style.display = (car.style.display === 'flex' ? 'none' : 'flex'); 
         }
         function cambiarFoto(id, src) { document.getElementById(`main-${id}`).src = src; }
