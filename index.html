@@ -11,8 +11,10 @@
         
         .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 50px; flex-wrap: wrap; }
         .producto-card { width: 300px; text-align: left; border: 1px solid #eee; padding: 20px; border-radius: 15px; }
+        /* Ajuste para que la imagen se vea bonita */
+        .producto-img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
         .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #5a3e3e; margin-bottom: 5px; }
-        .producto-desc { font-size: 0.9rem; color: #777; margin-bottom: 10px; }
+        .producto-desc { font-size: 0.9rem; color: #777; margin-bottom: 10px; min-height: 40px; }
     </style>
 </head>
 <body>
@@ -25,7 +27,6 @@
     <div class="productos-grid" id="lista-productos">Cargando catálogo...</div>
 
     <script>
-        // Tu ID de hoja de cálculo
         const sheetID = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
         const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
@@ -34,16 +35,18 @@
             .then(data => {
                 const json = JSON.parse(data.substr(47).slice(0, -2));
                 const contenedor = document.getElementById('lista-productos');
-                contenedor.innerHTML = ""; // Limpiar mensaje de carga
+                contenedor.innerHTML = ""; 
 
                 json.table.rows.forEach(row => {
                     const nombre = row.c[1]?.v;
                     const precio = row.c[2]?.v;
-                    const desc = row.c[7]?.v;
+                    const foto = row.c[3]?.v; // Columna D (foto1)
+                    const desc = row.c[7]?.v || ""; // Columna H (descripcion)
                     
                     const card = document.createElement('div');
                     card.className = 'producto-card';
                     card.innerHTML = `
+                        <img src="${foto}" class="producto-img" alt="${nombre}">
                         <div class="producto-nombre">${nombre}</div>
                         <div class="producto-desc">${desc}</div>
                         <div style="font-weight: bold; color:#8b5d5d;">$${precio.toLocaleString()}</div>
