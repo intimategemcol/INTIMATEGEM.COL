@@ -9,8 +9,8 @@
     <style>
         body { margin: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 50px; }
         
-        /* Lateral ajustado a la altura del título */
-        #lateral { position: fixed; left: 20px; top: 50px; width: 180px; text-align: left; font-size: 0.9rem; color: #5a3e3e; z-index: 100; }
+        /* Lateral ajustado para no bloquear el catálogo */
+        #lateral { position: absolute; left: 20px; top: 50px; width: 180px; text-align: left; font-size: 0.9rem; color: #5a3e3e; z-index: 10; }
         .redes { display: flex; gap: 15px; margin-top: 10px; font-size: 1.4rem; }
         .redes a { color: #8b5d5d; text-decoration: none; transition: 0.3s; }
         .redes a:hover { color: #5a3e3e; }
@@ -19,7 +19,7 @@
         .eslogan { font-size: 1rem; color: #8b5d5d; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; margin-bottom: 30px; font-weight: 300; }
         .color-marca { color: #8b5d5d; }
         
-        .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 20px; flex-wrap: wrap; }
+        .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 20px; flex-wrap: wrap; margin-top: 50px; }
         .producto-card { width: 320px; border: 1px solid #eee; background: white; padding: 25px; border-radius: 15px; transition: opacity 0.3s; }
         .producto-card.agotado { opacity: 0.6; filter: grayscale(0.5); }
         
@@ -126,4 +126,54 @@
             });
         });
 
-        function agregar(nombre, precio, id
+        function agregar(nombre, precio, id, img) {
+            const talla = document.getElementById(`talla-${id}`).value;
+            const cant = parseInt(document.getElementById(`cant-${id}`).value);
+            carrito.push({ nombre, precio, talla, cant, img });
+            document.getElementById('cuenta').innerText = carrito.length;
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            const lista = document.getElementById('items-en-carrito');
+            let totalGeneral = 0;
+            lista.innerHTML = carrito.map((i, idx) => {
+                let subtotal = i.precio * i.cant;
+                totalGeneral += subtotal;
+                return `
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; padding-bottom:10px; border-bottom:1px solid #eee; font-size:1rem;">
+                    <img src="${i.img}" style="width:50px; height:50px; border-radius:5px; object-fit:cover;">
+                    <div style="flex-grow:1;">
+                        <div style="font-weight:700;">${i.nombre} (${i.talla})</div>
+                        <div style="color:#8b5d5d;">$${i.precio.toLocaleString()} c/u</div>
+                        <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                            <span class="btn-control" onclick="if(carrito[${idx}].cant>1){carrito[${idx}].cant--; actualizarCarrito();}">-</span>
+                            <span style="font-weight:bold; font-size:1.2rem;">${i.cant}</span>
+                            <span class="btn-control" onclick="carrito[${idx}].cant++; actualizarCarrito();">+</span>
+                        </div>
+                    </div>
+                    <div style="font-weight:bold; color:#8b5d5d;">$${subtotal.toLocaleString()}</div>
+                    <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:red; cursor:pointer; font-size:1.5rem; margin-left:10px;">×</span>
+                </div>
+            `}).join('');
+            document.getElementById('total-carrito').innerText = "Total: $" + totalGeneral.toLocaleString();
+        }
+
+        function toggleCarrito() { 
+            const car = document.getElementById('lista-carrito');
+            car.style.display = (car.style.display === 'flex' ? 'none' : 'flex'); 
+        }
+        function cambiarFoto(id, src) { document.getElementById(`main-${id}`).src = src; }
+        function abrirZoom(id) { 
+            document.getElementById('zoom-img').src = document.getElementById(id).src; 
+            document.getElementById('lightbox').style.display = 'flex'; 
+        }
+        function enviarPedido() {
+            let totalGeneral = carrito.reduce((sum, i) => sum + (i.precio * i.cant), 0);
+            let detalles = carrito.map(i => `\n- ${i.nombre} | Talla: ${i.talla} | Cant: ${i.cant} | Subtotal: $${(i.precio * i.cant).toLocaleString()}`).join('');
+            const msg = `¡Hola! Quisiera comprar estas prendas:${detalles}\n\nTotal del pedido: $${totalGeneral.toLocaleString()}\n\n¿Me regalas más información, por favor?`;
+            window.open(`https://wa.me/573014816594?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
