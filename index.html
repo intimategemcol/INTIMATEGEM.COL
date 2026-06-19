@@ -5,12 +5,13 @@
     <title>IntimateGem.col</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 80px; }
+        /* Color de fondo añadido */
+        body { margin: 0; background-color: #fdf6f6; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 80px; }
         h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #8b5d5d; margin: 0; line-height: 1; }
         .eslogan { font-size: 1.4rem; color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; margin-bottom: 50px; font-weight: 300; }
         
         .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 20px; flex-wrap: wrap; }
-        .producto-card { width: 320px; border: 1px solid #eee; padding: 25px; border-radius: 15px; transition: opacity 0.3s; }
+        .producto-card { width: 320px; border: 1px solid #eee; background: white; padding: 25px; border-radius: 15px; transition: opacity 0.3s; }
         .producto-card.agotado { opacity: 0.6; filter: grayscale(0.5); }
         
         .img-principal { width: 100%; height: 300px; object-fit: cover; border-radius: 10px; cursor: zoom-in; }
@@ -33,9 +34,9 @@
         
         .btn-control { cursor: pointer; background: #8b5d5d; color: white; padding: 5px 15px; border-radius: 6px; font-weight: 900; font-size: 1.3rem; margin: 0 10px; }
 
-        /* Lightbox ajustado para centrar y ampliar la imagen */
+        /* Imagen en zoom ampliada */
         #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 999; display: flex; align-items: center; justify-content: center; }
-        #lightbox img { max-width: 95%; max-height: 90%; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        #lightbox img { max-width: 98%; max-height: 95%; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         .cerrar-zoom { position: absolute; top: 20px; right: 20px; color: white; font-size: 50px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
