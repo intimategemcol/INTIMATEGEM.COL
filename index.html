@@ -29,8 +29,8 @@
 
         #carrito-flotante { position: fixed; bottom: 20px; right: 20px; background: #8b5d5d; color: white; padding: 15px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
-        /* Carrito compacto */
-        #lista-carrito { display: none; position: fixed; bottom: 80px; right: 10px; left: 10px; background: white; border: 1px solid #ddd; padding: 10px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 50vh; overflow-y: auto; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
+        /* Carrito compacto y estético */
+        #lista-carrito { display: none; position: fixed; bottom: 85px; right: 10px; width: 260px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 250px; overflow-y: auto; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
 
         #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999; }
         #lightbox img { max-width: 90%; max-height: 80%; margin-top: 5%; border-radius: 10px; }
@@ -46,9 +46,9 @@
 
     <div id="carrito-flotante" onclick="toggleCarrito()">🛒 (<span id="cuenta">0</span>)</div>
     <div id="lista-carrito">
-        <h3 style="margin:0 0 10px 0; color:#8b5d5d; font-family:'Great Vibes'; font-size:1.5rem;">Tu Selección</h3>
+        <h3 style="margin:0 0 10px 0; color:#8b5d5d; font-family:'Great Vibes'; font-size:1.4rem;">Tu Selección</h3>
         <div id="items-en-carrito"></div>
-        <button class="btn-carrito" style="margin-top:10px;" onclick="enviarPedido()">Finalizar Pedido (WhatsApp)</button>
+        <button class="btn-carrito" onclick="enviarPedido()" style="padding: 8px;">Finalizar Pedido</button>
     </div>
 
     <div id="lightbox" onclick="this.style.display='none'">
@@ -109,16 +109,16 @@
         function actualizarCarrito() {
             const lista = document.getElementById('items-en-carrito');
             lista.innerHTML = carrito.map((i, idx) => `
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; padding:5px; background:#fcfcfc; border-bottom:1px solid #eee;">
-                    <img src="${i.img}" style="width:40px; height:40px; border-radius:4px; object-fit:cover;">
-                    <div style="flex-grow:1; font-size:0.75rem; color:#444; line-height:1.2;">
-                        <strong style="color:#222;">${i.nombre}</strong><br>
-                        Talla: ${i.talla} | $${(i.precio * i.cant).toLocaleString()}<br>
-                        <span onclick="if(carrito[${idx}].cant>1){carrito[${idx}].cant--; actualizarCarrito();}" style="cursor:pointer; background:#eee; padding:0 5px; border-radius:3px;">-</span>
-                        <span style="margin:0 5px;">${i.cant}</span>
-                        <span onclick="carrito[${idx}].cant++; actualizarCarrito();" style="cursor:pointer; background:#eee; padding:0 5px; border-radius:3px;">+</span>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid #f0f0f0; font-size:0.75rem;">
+                    <img src="${i.img}" style="width:35px; height:35px; border-radius:5px; object-fit:cover;">
+                    <div style="flex-grow:1; line-height:1.2;">
+                        <strong>${i.nombre}</strong><br>
+                        Talla: ${i.talla} | 
+                        <span onclick="if(carrito[${idx}].cant>1){carrito[${idx}].cant--; actualizarCarrito();}" style="cursor:pointer; font-weight:bold;">-</span>
+                        ${i.cant}
+                        <span onclick="carrito[${idx}].cant++; actualizarCarrito();" style="cursor:pointer; font-weight:bold;">+</span>
                     </div>
-                    <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:#d9534f; cursor:pointer; font-weight:bold; font-size:1rem;">&times;</span>
+                    <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:red; cursor:pointer;">&times;</span>
                 </div>
             `).join('');
         }
