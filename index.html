@@ -8,20 +8,15 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            /* Aplicamos la imagen exacta de image_72832b.png */
-            background-image: url('https://i.imgur.com/kK53S1M.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            min-height: 100vh;
+            /* Aplicando image_727bec.png como fondo */
+            background-image: url('https://i.imgur.com/vHqQJd3.png');
+            background-size: contain; /* Para que se vea el patrón completo */
+            background-repeat: repeat;
+            background-color: #fffaf5; /* Color crema suave de base */
             
             text-align: center;
             font-family: 'Poppins', sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
             padding-top: 80px;
         }
 
@@ -29,11 +24,11 @@
             width: 100%;
         }
 
-        /* Nombre tal como lo querías, sin cuadros detrás */
+        /* Nombre elegante, sin ningún cuadro detrás */
         h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 7rem;
-            color: #5a3e3e;
+            color: #8b5d5d;
             margin: 0;
             line-height: 1;
         }
@@ -41,11 +36,11 @@
         .eslogan {
             font-family: 'Poppins', sans-serif;
             font-size: 1.4rem;
-            color: #4a3737;
+            color: #8b5d5d;
             letter-spacing: 5px;
             text-transform: uppercase;
             margin-top: 10px;
-            font-weight: 400;
+            font-weight: 300;
         }
     </style>
 </head>
