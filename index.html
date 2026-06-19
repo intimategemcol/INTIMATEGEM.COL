@@ -28,9 +28,7 @@
         .badge-agotado { color: #d9534f; font-weight: bold; font-size: 1.2rem; margin: 10px 0; }
 
         #carrito-flotante { position: fixed; bottom: 20px; right: 20px; background: #8b5d5d; color: white; padding: 15px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        
-        /* Ajuste de tamaño para móvil y estilo mejorado */
-        #lista-carrito { display: none; position: fixed; bottom: 85px; right: 10px; left: 10px; background: white; border: 1px solid #ddd; padding: 20px; border-radius: 20px; z-index: 1000; text-align: left; max-height: 400px; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        #lista-carrito { display: none; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 15px; border-radius: 15px; width: 280px; z-index: 1000; text-align: left; max-height: 300px; overflow-y: auto; }
 
         #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999; }
         #lightbox img { max-width: 90%; max-height: 80%; margin-top: 5%; border-radius: 10px; }
@@ -46,7 +44,6 @@
 
     <div id="carrito-flotante" onclick="toggleCarrito()">🛒 (<span id="cuenta">0</span>)</div>
     <div id="lista-carrito">
-        <h3 style="margin-top:0; color:#5a3e3e; border-bottom:1px solid #eee; padding-bottom:10px;">Tu Selección</h3>
         <div id="items-en-carrito"></div>
         <button class="btn-carrito" onclick="enviarPedido()">Finalizar Pedido (WhatsApp)</button>
     </div>
@@ -109,18 +106,15 @@
         function actualizarCarrito() {
             const lista = document.getElementById('items-en-carrito');
             lista.innerHTML = carrito.map((i, idx) => `
-                <div style="display:flex; align-items:center; gap:12px; margin-bottom:15px; padding:10px; background:#f9f9f9; border-radius:10px;">
-                    <img src="${i.img}" style="width:60px; height:60px; border-radius:8px; object-fit:cover; border:1px solid #ddd;">
-                    <div style="flex-grow:1; line-height:1.4;">
-                        <strong style="color:#5a3e3e; font-size:0.9rem;">${i.nombre}</strong><br>
-                        <small style="color:#888;">Talla: ${i.talla}</small><br>
-                        <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
-                            <span onclick="if(carrito[${idx}].cant>1){carrito[${idx}].cant--; actualizarCarrito();}" style="cursor:pointer; background:#ddd; padding:2px 8px; border-radius:4px; font-weight:bold;">-</span>
-                            <span>${i.cant}</span>
-                            <span onclick="carrito[${idx}].cant++; actualizarCarrito();" style="cursor:pointer; background:#ddd; padding:2px 8px; border-radius:4px; font-weight:bold;">+</span>
-                        </div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:0.8rem; border-bottom:1px solid #eee;">
+                    <img src="${i.img}" style="width:40px; height:40px; border-radius:5px; object-fit:cover;">
+                    <div style="flex-grow:1;">
+                        ${i.nombre} (${i.talla})<br>
+                        <span onclick="if(carrito[${idx}].cant>1){carrito[${idx}].cant--; actualizarCarrito();}" style="cursor:pointer; font-weight:bold;">-</span>
+                        ${i.cant}
+                        <span onclick="carrito[${idx}].cant++; actualizarCarrito();" style="cursor:pointer; font-weight:bold;">+</span>
                     </div>
-                    <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:#d9534f; cursor:pointer; font-size:1.2rem; font-weight:bold;">&times;</span>
+                    <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:red; cursor:pointer; font-weight:bold;">X</span>
                 </div>
             `).join('');
         }
