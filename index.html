@@ -2,46 +2,41 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>IntimateGem.col | Boutique Premium</title>
+    <title>IntimateGem.col | Boutique</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #aa7c7c; --bg: #fcf8f5; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: #4a3737; margin: 0; padding: 20px; 
-               background-image: url('https://www.transparenttextures.com/patterns/floral-wallpaper.png'); }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); background-image: url('https://www.transparenttextures.com/patterns/floral-wallpaper.png'); color: #4a3737; margin: 0; padding: 20px; }
         
         h1 { font-family: 'Playfair Display', serif; text-align: center; color: var(--primary); margin-bottom: 40px; }
-
-        /* Contenedor de Tarjetas */
-        #contenedor-productos { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto; }
-        .producto-card { background: white; padding: 25px; border-radius: 25px; border: 1px solid #e0d0d0; text-align: center; display: flex; flex-direction: column; }
         
-        /* Imágenes y detalles */
-        .producto-card img { width: 100%; height: 350px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; }
-        h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 10px 0; }
-        .desc { font-size: 0.9rem; color: #777; margin-bottom: 15px; }
-        .precio { font-size: 1.2rem; font-weight: bold; color: var(--primary); margin-bottom: 15px; }
-
-        /* Controles */
-        select, input { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; }
-        .btn-agregar { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 20px; cursor: pointer; }
-
-        /* Carrito */
-        #btn-flotante { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; padding: 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        #modal-carrito { display:none; position:fixed; top:10%; right:5%; width:90%; max-width:400px; background:white; padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); z-index:1000; }
-        .item-resumen { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        #contenedor-productos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto; }
+        
+        .producto-card { background: white; padding: 20px; border-radius: 25px; border: 1px solid #efe8e8; display: flex; flex-direction: column; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .producto-card img { width: 100%; height: 300px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; }
+        
+        .titulo-prod { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin: 5px 0; }
+        .desc-prod { font-size: 0.85rem; color: #777; margin-bottom: 10px; height: 40px; }
+        .precio-prod { font-weight: bold; color: var(--primary); margin-bottom: 10px; }
+        
+        select, input { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; }
+        button { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 15px; cursor: pointer; transition: 0.3s; }
+        
+        #modal-carrito { display:none; position:fixed; top:10%; right:5%; width:90%; max-width:400px; background:white; padding:20px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); z-index:1000; }
+        .btn-flotante { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <h1>IntimateGem.col</h1>
-    <div id="contenedor-productos"></div>
-    <div id="btn-flotante" onclick="document.getElementById('modal-carrito').style.display='block'">🛒 Carrito</div>
+    <div id="contenedor-productos">Cargando catálogo...</div>
+    <div class="btn-flotante" onclick="document.getElementById('modal-carrito').style.display='block'">🛒 Carrito</div>
 
     <div id="modal-carrito">
-        <h3>Tu Selección</h3>
+        <h2 style="font-family:'Playfair Display'">Tu Selección</h2>
         <div id="lista-detallada"></div>
-        <button class="btn-agregar" onclick="enviarWhatsApp()">Finalizar en WhatsApp</button>
-        <button onclick="document.getElementById('modal-carrito').style.display='none'">Cerrar</button>
+        <button style="width:100%; margin-top:10px;" onclick="enviarWhatsApp()">Finalizar Pedido (WhatsApp)</button>
+        <button style="width:100%; background:#ccc; margin-top:5px;" onclick="document.getElementById('modal-carrito').style.display='none'">Cerrar</button>
     </div>
 
 <script>
@@ -59,19 +54,28 @@
         document.getElementById("contenedor-productos").innerHTML = inventario.map(p => `
             <div class="producto-card">
                 <img src="${p.foto1}">
-                <h3>${p.nombre}</h3>
-                <p class="desc">${p.descripcion || 'Encaje premium exclusivo'}</p>
-                <p class="precio">$${p.precio}</p>
+                <h3 class="titulo-prod">${p.nombre}</h3>
+                <p class="desc-prod">${p.descripcion || 'Encaje premium'}</p>
+                <p class="precio-prod">$${p.precio}</p>
                 <select id="talla-${p.id}">${p.tallas.map(t => `<option>${t}</option>`).join('')}</select>
                 <input type="number" id="cant-${p.id}" value="1" min="1">
-                <button class="btn-agregar" onclick="agregar('${p.id}')">Añadir al Carrito</button>
+                <button onclick="agregar('${p.id}')">Añadir al Carrito</button>
             </div>`).join('');
     }
 
     function agregar(id) {
         const p = inventario.find(i => i.id == id);
         carrito.push({ ...p, talla: document.getElementById(`talla-${id}`).value, cant: document.getElementById(`cant-${id}`).value });
-        alert("Añadido a tu carrito");
+        actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+        document.getElementById("lista-detallada").innerHTML = carrito.map((item, i) => `
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding:5px 0;">
+                <span>${item.nombre} (T:${item.talla} x${item.cant})</span>
+                <button onclick="carrito.splice(${i},1); actualizarCarrito()">X</button>
+            </div>`).join('');
+        document.getElementById("modal-carrito").style.display = 'block';
     }
 
     function enviarWhatsApp() {
