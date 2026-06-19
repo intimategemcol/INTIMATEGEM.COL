@@ -122,12 +122,7 @@
                     <img src="${i.img}" style="width:65px; height:65px; border-radius:8px; object-fit:cover;">
                     <div style="flex-grow:1; line-height:1.6;">
                         <div style="font-weight:700; color:#333;">${i.nombre}</div>
-                        <div style="font-size:1.1rem;">Talla: ${i.talla} | $${subtotal.toLocaleString()}</div>
-                        <div style="margin-top:10px;">
-                            <span class="btn-control" onclick="if(carrito[${idx}].cant>1){carrito[${idx}].cant--; actualizarCarrito();}">-</span>
-                            <span style="margin:0 15px; font-weight:bold; font-size:1.4rem;">${i.cant}</span>
-                            <span class="btn-control" onclick="carrito[${idx}].cant++; actualizarCarrito();">+</span>
-                        </div>
+                        <div style="font-size:1.1rem;">Talla: ${i.talla} | Cant: ${i.cant} | $${subtotal.toLocaleString()}</div>
                     </div>
                     <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:red; cursor:pointer; font-size:1.8rem; font-weight:bold;">&times;</span>
                 </div>
@@ -145,8 +140,9 @@
             document.getElementById('lightbox').style.display = 'flex'; 
         }
         function enviarPedido() {
-            const msg = "¡Hola! Pedido: " + carrito.map(i => `${i.nombre} (${i.talla} x${i.cant})`).join(', ');
-            /* Número actualizado */
+            let totalGeneral = carrito.reduce((sum, i) => sum + (i.precio * i.cant), 0);
+            let detalles = carrito.map(i => `\n- ${i.nombre} | Talla: ${i.talla} | Cant: ${i.cant}`).join('');
+            const msg = `¡Hola! Quisiera comprar estas prendas:${detalles}\n\nTotal del pedido: $${totalGeneral.toLocaleString()}\n\n¿Me regalas más información, por favor?`;
             window.open(`https://wa.me/573014816594?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
