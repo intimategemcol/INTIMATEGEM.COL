@@ -5,66 +5,76 @@
     <title>IntimateGem.col</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; padding: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 80px; }
+        body { margin: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 80px; }
         h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #8b5d5d; margin: 0; line-height: 1; }
-        .eslogan { font-size: 1.4rem; color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; font-weight: 300; }
+        .eslogan { font-size: 1.4rem; color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; margin-bottom: 50px; font-weight: 300; }
         
-        .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 50px; flex-wrap: wrap; }
+        .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 20px; flex-wrap: wrap; }
         .producto-card { width: 300px; border: 1px solid #eee; padding: 20px; border-radius: 15px; }
         
-        /* Imágenes */
-        .producto-img-main { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-        .thumbs { display: flex; justify-content: center; gap: 10px; margin: 10px 0; }
-        .thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; cursor: pointer; border: 1px solid #ddd; }
+        /* Imágenes y Galería */
+        .img-principal { width: 100%; height: 300px; object-fit: cover; border-radius: 10px; cursor: zoom-in; }
+        .galeria-mini { display: flex; gap: 5px; margin: 10px 0; justify-content: center; }
+        .mini { width: 60px; height: 60px; object-fit: cover; cursor: pointer; border: 1px solid #ddd; }
         
-        .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #5a3e3e; margin-bottom: 5px; text-align: center; }
-        .producto-desc { font-size: 0.9rem; color: #777; margin-bottom: 10px; min-height: 40px; }
+        .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #5a3e3e; text-align: center; margin: 10px 0; }
+        .producto-desc { font-size: 0.9rem; color: #777; margin-bottom: 10px; }
+
+        /* Efecto Zoom (Lightbox) */
+        #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999; }
+        #lightbox img { max-width: 90%; max-height: 80%; margin-top: 5%; border-radius: 10px; }
+        .cerrar-zoom { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="header-container">
-        <h1>IntimateGem.col ✨</h1>
-        <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
-    </div>
+    <h1>IntimateGem.col ✨</h1>
+    <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
 
     <div class="productos-grid" id="lista-productos">Cargando catálogo...</div>
+
+    <div id="lightbox" onclick="this.style.display='none'">
+        <span class="cerrar-zoom">&times;</span>
+        <img id="zoom-img" src="">
+    </div>
 
     <script>
         const sheetID = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
         const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
-        fetch(url)
-            .then(res => res.text())
-            .then(data => {
-                const json = JSON.parse(data.substr(47).slice(0, -2));
-                const contenedor = document.getElementById('lista-productos');
-                contenedor.innerHTML = ""; 
+        fetch(url).then(res => res.text()).then(data => {
+            const json = JSON.parse(data.substr(47).slice(0, -2));
+            const container = document.getElementById('lista-productos');
+            container.innerHTML = "";
 
-                json.table.rows.forEach(row => {
-                    const nombre = row.c[1]?.v;
-                    const precio = row.c[2]?.v;
-                    const f1 = row.c[3]?.v;
-                    const f2 = row.c[4]?.v;
-                    const f3 = row.c[5]?.v;
-                    const desc = row.c[7]?.v || "";
-                    
-                    const card = document.createElement('div');
-                    card.className = 'producto-card';
-                    card.innerHTML = `
-                        <img src="${f1}" class="producto-img-main" id="main-${nombre}" onclick="window.open('${f1}')">
-                        <div class="thumbs">
-                            <img src="${f1}" class="thumb" onclick="document.getElementById('main-${nombre}').src='${f1}'">
-                            <img src="${f2}" class="thumb" onclick="document.getElementById('main-${nombre}').src='${f2}'">
-                            <img src="${f3}" class="thumb" onclick="document.getElementById('main-${nombre}').src='${f3}'">
-                        </div>
-                        <div class="producto-nombre">${nombre}</div>
-                        <div class="producto-desc">${desc}</div>
-                        <div style="font-weight: bold; color:#8b5d5d;">$${precio.toLocaleString()}</div>
-                    `;
-                    contenedor.appendChild(card);
-                });
+            json.table.rows.forEach(row => {
+                const nombre = row.c[1]?.v;
+                const precio = row.c[2]?.v;
+                const f1 = row.c[3]?.v, f2 = row.c[4]?.v, f3 = row.c[5]?.v;
+                const desc = row.c[7]?.v || "";
+                
+                const card = document.createElement('div');
+                card.className = 'producto-card';
+                card.innerHTML = `
+                    <img src="${f1}" class="img-principal" onclick="abrirZoom('${f1}')" id="main-${nombre}">
+                    <div class="galeria-mini">
+                        <img src="${f1}" class="mini" onclick="cambiarFoto('${nombre}', '${f1}')">
+                        <img src="${f2}" class="mini" onclick="cambiarFoto('${nombre}', '${f2}')">
+                        <img src="${f3}" class="mini" onclick="cambiarFoto('${nombre}', '${f3}')">
+                    </div>
+                    <div class="producto-nombre">${nombre}</div>
+                    <div class="producto-desc">${desc}</div>
+                    <div style="font-weight: bold; color:#8b5d5d;">$${precio.toLocaleString()}</div>
+                `;
+                container.appendChild(card);
             });
+        });
+
+        function cambiarFoto(id, src) { document.getElementById(`main-${id}`).src = src; }
+        function abrirZoom(src) { 
+            document.getElementById('zoom-img').src = src; 
+            document.getElementById('lightbox').style.display = 'block'; 
+        }
     </script>
 </body>
 </html>
