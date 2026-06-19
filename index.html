@@ -5,47 +5,34 @@
     <title>IntimateGem.col</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            /* Fondo limpio, sin imagen */
-            background-color: #ffffff; 
-            
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            padding-top: 80px;
-        }
-
-        .header-container {
-            width: 100%;
-        }
-
-        /* Nombre elegante, sin ningún cuadro detrás */
-        h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 7rem;
-            color: #8b5d5d;
-            margin: 0;
-            line-height: 1;
-        }
-
-        .eslogan {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.4rem;
-            color: #8b5d5d;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-top: 10px;
-            font-weight: 300;
-        }
+        body { margin: 0; padding: 20px; font-family: 'Poppins', sans-serif; text-align: center; background-color: #ffffff; }
+        h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #8b5d5d; margin: 0; }
+        .eslogan { color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 50px; }
+        
+        #contenedor-productos { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .producto { width: 300px; padding: 20px; border: 1px solid #eee; border-radius: 15px; }
+        .producto img { width: 100%; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="header-container">
-        <h1>IntimateGem.col ✨</h1>
-        <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
+    <h1>IntimateGem.col ✨</h1>
+    <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
+
+    <div id="contenedor-productos">
+        <!-- Producto 1 -->
+        <div class="producto">
+            <img src="https://lh3.googleusercontent.com/d/1NirUkwXblq43lfWtSjXfldVYrL824hiP" alt="Goddess Set">
+            <h3>Goddess Set</h3>
+            <p>$45000</p>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="producto">
+            <img src="https://lh3.googleusercontent.com/d/1NirUkwXblq43lfWtSjXfldVYrL824hiP" alt="Nova Set">
+            <h3>Nova Set</h3>
+            <p>$22000</p>
+        </div>
     </div>
 
 </body>
