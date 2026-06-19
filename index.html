@@ -27,7 +27,6 @@
         
         .badge-agotado { color: #d9534f; font-weight: bold; font-size: 1.2rem; margin: 10px 0; }
 
-        /* Carrito Flotante para Móvil */
         #carrito-flotante { position: fixed; bottom: 20px; right: 20px; background: #8b5d5d; color: white; padding: 15px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         #lista-carrito { display: none; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 15px; border-radius: 15px; width: 280px; z-index: 1000; text-align: left; max-height: 300px; overflow-y: auto; }
 
@@ -107,8 +106,10 @@
         function actualizarCarrito() {
             const lista = document.getElementById('items-en-carrito');
             lista.innerHTML = carrito.map((i, idx) => `
-                <div style="font-size:0.8rem; margin-bottom:10px; border-bottom:1px solid #eee;">
-                    ${i.nombre} (${i.talla}) - ${i.cant} ud. <span onclick="carrito.splice(${idx},1); actualizarCarrito();" style="color:red; cursor:pointer;">X</span>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:0.8rem; border-bottom:1px solid #eee;">
+                    <img src="${i.img}" style="width:40px; height:40px; border-radius:5px; object-fit:cover;">
+                    <div style="flex-grow:1;">${i.nombre} (${i.talla})<br>Cant: ${i.cant}</div>
+                    <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:red; cursor:pointer; font-weight:bold;">X</span>
                 </div>
             `).join('');
         }
