@@ -10,6 +10,9 @@
         h1 { font-family: 'Great Vibes', cursive; font-size: 4rem; color: #8b5d5d; margin: 0; line-height: 1; }
         .eslogan { font-size: 1rem; color: #8b5d5d; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; margin-bottom: 30px; font-weight: 300; }
         
+        /* Color del texto de la marca (aplicado a elementos destacados) */
+        .color-marca { color: #8b5d5d; }
+        
         .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 20px; flex-wrap: wrap; }
         .producto-card { width: 320px; border: 1px solid #eee; background: white; padding: 25px; border-radius: 15px; transition: opacity 0.3s; }
         .producto-card.agotado { opacity: 0.6; filter: grayscale(0.5); }
@@ -28,8 +31,8 @@
         
         .badge-agotado { color: #d9534f; font-weight: bold; font-size: 1.4rem; margin: 15px 0; }
 
-        /* Bolsa de compras neutra y posicionada */
-        #carrito-flotante { position: fixed; top: 20px; right: 20px; background: #8b5d5d; color: #fdf6f6; padding: 15px 20px; border-radius: 30px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-size: 1.2rem; font-weight: bold; }
+        /* Estilo elegante para la bolsita */
+        #carrito-flotante { position: fixed; top: 20px; right: 20px; color: #8b5d5d; cursor: pointer; z-index: 1000; font-size: 1.8rem; font-weight: 300; background: white; padding: 10px; border-radius: 50%; border: 1px solid #8b5d5d; }
         
         #lista-carrito { display: none; position: fixed; top: 80px; right: 20px; width: 340px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); flex-direction: column; }
         #items-en-carrito { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; }
@@ -43,11 +46,12 @@
 </head>
 <body>
 
-    <!-- Bolsita neutra -->
-    <div id="carrito-flotante" onclick="toggleCarrito()">👜 (<span id="cuenta">0</span>)</div>
+    <!-- Bolsita de compras en color de marca -->
+    <div id="carrito-flotante" onclick="toggleCarrito()">
+        🛍️ <span style="font-size: 1rem; vertical-align: top;">(<span id="cuenta">0</span>)</span>
+    </div>
 
-    <!-- Estrella neutra (color acorde a la marca) -->
-    <h1>IntimateGem.col <span style="color:#b5a0a0;">✨</span></h1>
+    <h1>IntimateGem.col <span class="color-marca">✨</span></h1>
     <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
 
     <div class="productos-grid" id="lista-productos">Cargando catálogo...</div>
