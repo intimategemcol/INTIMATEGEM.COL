@@ -8,34 +8,37 @@
         body {
             margin: 0;
             padding: 0;
-            /* Fondo con flores más definidas y elegantes */
-            background-color: #fcf8f5;
-            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png'), 
-                              url('https://www.transparenttextures.com/patterns/floral-wallpaper.png');
-            background-blend-mode: multiply;
+            /* Usamos una imagen de flores más llamativa y elegante */
+            background-image: url('https://images.unsplash.com/photo-1596700033883-790754802c63?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             text-align: center;
             font-family: 'Poppins', sans-serif;
-            padding-top: 50px;
+            padding-top: 80px;
+            /* Un filtro suave para que las flores se vean pero no oculten el texto */
+            background-color: rgba(255, 255, 255, 0.6);
+            background-blend-mode: lighten;
         }
 
         .header-container {
             margin-bottom: 40px;
         }
 
+        /* Título limpio, sin fondos */
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 5rem;
+            font-size: 6rem; /* Tamaño aumentado */
             color: #8b5d5d;
             margin: 0;
-            text-shadow: none; /* Asegura que no tenga sombra ni fondo */
-            background: none !important;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
         }
 
         .eslogan {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.2rem;
-            color: #a39595;
-            letter-spacing: 3px;
+            font-size: 1.3rem;
+            color: #555;
+            letter-spacing: 4px;
             text-transform: uppercase;
             margin-top: -10px;
         }
