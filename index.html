@@ -33,7 +33,6 @@
         
         .btn-control { cursor: pointer; background: #8b5d5d; color: white; padding: 5px 15px; border-radius: 6px; font-weight: 900; font-size: 1.3rem; margin: 0 10px; }
 
-        /* Corrección: display inicial como none para evitar sombra al cargar */
         #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 999; align-items: center; justify-content: center; }
         #lightbox img { max-width: 98%; max-height: 95%; border-radius: 10px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
         .cerrar-zoom { position: absolute; top: 15px; right: 25px; color: white; font-size: 60px; cursor: pointer; }
@@ -80,7 +79,7 @@
                 const card = document.createElement('div');
                 card.className = `producto-card ${estado === 'agotado' ? 'agotado' : ''}`;
                 card.innerHTML = `
-                    <img src="${f1}" class="img-principal" onclick="abrirZoom('${f1}')" id="main-${index}">
+                    <img src="${f1}" class="img-principal" onclick="abrirZoom('main-${index}')" id="main-${index}">
                     <div class="galeria-mini">
                         <img src="${f1}" class="mini" onclick="cambiarFoto('${index}', '${f1}')">
                         <img src="${f2}" class="mini" onclick="cambiarFoto('${index}', '${f2}')">
@@ -135,7 +134,11 @@
 
         function toggleCarrito() { document.getElementById('lista-carrito').style.display = document.getElementById('lista-carrito').style.display === 'block' ? 'none' : 'block'; }
         function cambiarFoto(id, src) { document.getElementById(`main-${id}`).src = src; }
-        function abrirZoom(src) { document.getElementById('zoom-img').src = src; document.getElementById('lightbox').style.display = 'flex'; }
+        /* Nueva función que toma el SRC de la imagen que está activa */
+        function abrirZoom(id) { 
+            document.getElementById('zoom-img').src = document.getElementById(id).src; 
+            document.getElementById('lightbox').style.display = 'flex'; 
+        }
         function enviarPedido() {
             const msg = "¡Hola! Pedido: " + carrito.map(i => `${i.nombre} (${i.talla} x${i.cant})`).join(', ');
             window.open(`https://wa.me/573000000000?text=${encodeURIComponent(msg)}`, '_blank');
