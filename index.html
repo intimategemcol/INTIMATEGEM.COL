@@ -8,36 +8,34 @@
         body {
             margin: 0;
             padding: 0;
-            /* Usamos una imagen de flores más llamativa y elegante */
-            background-image: url('https://images.unsplash.com/photo-1596700033883-790754802c63?q=80&w=2000&auto=format&fit=crop');
+            /* Usamos una imagen de fondo de flores con más color y detalle */
+            background-image: url('https://images.unsplash.com/photo-1518524364024-57774705706c?q=80&w=2000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             text-align: center;
             font-family: 'Poppins', sans-serif;
             padding-top: 80px;
-            /* Un filtro suave para que las flores se vean pero no oculten el texto */
-            background-color: rgba(255, 255, 255, 0.6);
-            background-blend-mode: lighten;
         }
 
         .header-container {
             margin-bottom: 40px;
+            /* Sin fondos, sin sombras, nada que cubra el nombre */
+            background: transparent;
         }
 
-        /* Título limpio, sin fondos */
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 6rem; /* Tamaño aumentado */
-            color: #8b5d5d;
+            font-size: 6rem;
+            color: #6b3f3f; /* Un tono un poco más oscuro para que resalte sobre las flores */
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+            text-shadow: none; /* Aseguramos que no haya sombras */
         }
 
         .eslogan {
             font-family: 'Poppins', sans-serif;
             font-size: 1.3rem;
-            color: #555;
+            color: #4a2c2c;
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-top: -10px;
