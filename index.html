@@ -29,11 +29,11 @@
 
         #carrito-flotante { position: fixed; bottom: 25px; right: 25px; background: #8b5d5d; color: white; padding: 25px 30px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 6px 15px rgba(0,0,0,0.3); font-size: 1.5rem; font-weight: bold; }
         
-        #lista-carrito { display: none; position: fixed; bottom: 100px; right: 10px; width: 320px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
+        #lista-carrito { display: none; position: fixed; bottom: 100px; right: 10px; width: 340px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
         #items-en-carrito { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; }
         
-        /* Botones + y - con borde grueso */
-        .btn-control { cursor: pointer; background: white; color: #8b5d5d; border: 3px solid #8b5d5d; padding: 2px 12px; border-radius: 8px; font-weight: 900; font-size: 1.3rem; margin: 0 10px; }
+        /* Botones de control con grosor */
+        .btn-control { cursor: pointer; background: #8b5d5d; color: white; padding: 2px 12px; border-radius: 5px; font-weight: 900; font-size: 1.2rem; display: inline-block; border: 2px solid #5a3e3e; }
 
         #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 999; align-items: center; justify-content: center; }
         #lightbox img { max-width: 98%; max-height: 95%; border-radius: 10px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
@@ -119,18 +119,19 @@
                 let subtotal = i.precio * i.cant;
                 totalGeneral += subtotal;
                 return `
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #eee; font-size:1.1rem;">
-                    <img src="${i.img}" style="width:50px; height:50px; border-radius:8px; object-fit:cover;">
-                    <div style="flex-grow:1; line-height:1.4;">
-                        <div style="font-weight:700; color:#333;">${i.nombre}</div>
-                        <div>Talla: ${i.talla}</div>
-                        <div style="margin-top:5px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px; padding-bottom:10px; border-bottom:1px solid #eee; font-size:1rem;">
+                    <img src="${i.img}" style="width:50px; height:50px; border-radius:5px; object-fit:cover;">
+                    <div style="flex-grow:1;">
+                        <div style="font-weight:700;">${i.nombre} (${i.talla})</div>
+                        <div style="color:#8b5d5d;">$${i.precio.toLocaleString()} c/u</div>
+                        <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
                             <span class="btn-control" onclick="if(carrito[${idx}].cant>1){carrito[${idx}].cant--; actualizarCarrito();}">-</span>
-                            <span style="font-weight:bold; font-size:1.3rem;">${i.cant}</span>
+                            <span style="font-weight:bold; font-size:1.2rem;">${i.cant}</span>
                             <span class="btn-control" onclick="carrito[${idx}].cant++; actualizarCarrito();">+</span>
                         </div>
                     </div>
-                    <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:red; cursor:pointer; font-size:1.8rem;">&times;</span>
+                    <div style="font-weight:bold; color:#8b5d5d;">$${subtotal.toLocaleString()}</div>
+                    <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:red; cursor:pointer; font-size:1.5rem; margin-left:10px;">&times;</span>
                 </div>
             `}).join('');
             document.getElementById('total-carrito').innerText = "Total: $" + totalGeneral.toLocaleString();
@@ -147,7 +148,7 @@
         }
         function enviarPedido() {
             let totalGeneral = carrito.reduce((sum, i) => sum + (i.precio * i.cant), 0);
-            let detalles = carrito.map(i => `\n- ${i.nombre} | Talla: ${i.talla} | Cant: ${i.cant}`).join('');
+            let detalles = carrito.map(i => `\n- ${i.nombre} | Talla: ${i.talla} | Cant: ${i.cant} | Subtotal: $${(i.precio * i.cant).toLocaleString()}`).join('');
             const msg = `¡Hola! Quisiera comprar estas prendas:${detalles}\n\nTotal del pedido: $${totalGeneral.toLocaleString()}\n\n¿Me regalas más información, por favor?`;
             window.open(`https://wa.me/573014816594?text=${encodeURIComponent(msg)}`, '_blank');
         }
