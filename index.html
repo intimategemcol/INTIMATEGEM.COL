@@ -8,32 +8,34 @@
         body {
             margin: 0;
             padding: 0;
-            /* Fondo de flores elegante, estilo boutique, alta definición */
-            background-image: url('https://images.unsplash.com/photo-1526045612212-07caf87c5c74?q=80&w=2000&auto=format&fit=crop');
+            height: 100vh;
+            /* Aplicamos la imagen exacta de image_72832b.png */
+            background-image: url('https://i.imgur.com/kK53S1M.png');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
             background-repeat: no-repeat;
+            background-attachment: fixed;
             
-            /* Eliminamos los filtros de opacidad/transparencia */
             text-align: center;
             font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
             padding-top: 80px;
         }
 
         .header-container {
-            margin-bottom: 40px;
-            /* Aseguramos que nada bloquee la vista del fondo */
-            background: none !important;
+            width: 100%;
         }
 
-        /* Título sin cajas, sin fondos, tal como lo quieres */
+        /* Nombre tal como lo querías, sin cuadros detrás */
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 7rem; 
-            color: #5a3e3e; /* Un tono más profundo para que resalte sobre las flores */
+            font-size: 7rem;
+            color: #5a3e3e;
             margin: 0;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+            line-height: 1;
         }
 
         .eslogan {
@@ -42,7 +44,7 @@
             color: #4a3737;
             letter-spacing: 5px;
             text-transform: uppercase;
-            margin-top: -15px;
+            margin-top: 10px;
             font-weight: 400;
         }
     </style>
