@@ -18,12 +18,13 @@
         select { padding: 5px 10px; border: 1px solid #ccc; border-radius: 5px; color: #5a3e3e; }
         .btn-carrito { background-color: #8b5d5d; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; width: 100%; }
         
-        /* Carrito con imágenes */
+        /* Carrito actualizado */
         #carrito-flotante { position: fixed; bottom: 20px; right: 20px; background: #5a3e3e; color: white; padding: 15px; border-radius: 15px; cursor: pointer; z-index: 1000; }
-        #lista-carrito { display: none; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 15px; border-radius: 10px; width: 300px; z-index: 1000; text-align: left; max-height: 400px; overflow-y: auto; }
+        #lista-carrito { display: none; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; padding: 15px; border-radius: 10px; width: 320px; z-index: 1000; text-align: left; max-height: 400px; overflow-y: auto; }
         .item-carrito { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .item-carrito img { width: 40px; height: 40px; object-fit: cover; border-radius: 5px; }
         .btn-eliminar { color: red; cursor: pointer; font-weight: bold; margin-left: auto; }
+        .btn-ajuste { cursor: pointer; padding: 0 5px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -72,8 +73,14 @@
 
         function agregarAlCarrito(nombre, precio, idTalla, idCant, img) {
             const talla = document.getElementById(idTalla).value;
-            const cant = document.getElementById(idCant).value;
+            const cant = parseInt(document.getElementById(idCant).value);
             carrito.push({ nombre, precio, talla, cant, img });
+            actualizarLista();
+        }
+
+        function ajustarCantidad(index, delta) {
+            carrito[index].cant += delta;
+            if (carrito[index].cant < 1) carrito[index].cant = 1;
             actualizarLista();
         }
 
@@ -88,7 +95,12 @@
             lista.innerHTML = carrito.map((i, index) => `
                 <div class="item-carrito">
                     <img src="${i.img}">
-                    <div>${i.nombre} (${i.talla}) x${i.cant}</div>
+                    <div>
+                        ${i.nombre} (${i.talla})<br>
+                        <span class="btn-ajuste" onclick="ajustarCantidad(${index}, -1)">-</span>
+                        ${i.cant}
+                        <span class="btn-ajuste" onclick="ajustarCantidad(${index}, 1)">+</span>
+                    </div>
                     <span class="btn-eliminar" onclick="eliminarDelCarrito(${index})">X</span>
                 </div>
             `).join('');
