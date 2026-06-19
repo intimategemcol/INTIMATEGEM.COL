@@ -8,25 +8,18 @@
         body {
             margin: 0;
             padding: 0;
-            /* Fondo floral elegante y bien visible */
-            background-color: #fcf4f2;
-            background-image: url('https://img.freepik.com/vector-premium/patron-sin-costuras-flores-acuarela-suaves-tonos-pastel_72739-166.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            /* Fondo con flores más definidas y elegantes */
+            background-color: #fcf8f5;
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png'), 
+                              url('https://www.transparenttextures.com/patterns/floral-wallpaper.png');
+            background-blend-mode: multiply;
             text-align: center;
             font-family: 'Poppins', sans-serif;
-            padding-top: 80px;
-            /* Una capa de color suave encima de la imagen para que el texto resalte */
-            background-blend-mode: lighten;
+            padding-top: 50px;
         }
 
         .header-container {
             margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.4); /* Fondo semi-transparente para el título */
-            padding: 20px;
-            border-radius: 20px;
-            display: inline-block;
         }
 
         h1 {
@@ -34,16 +27,17 @@
             font-size: 5rem;
             color: #8b5d5d;
             margin: 0;
+            text-shadow: none; /* Asegura que no tenga sombra ni fondo */
+            background: none !important;
         }
 
         .eslogan {
             font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
-            color: #8b5d5d;
-            letter-spacing: 4px;
+            color: #a39595;
+            letter-spacing: 3px;
             text-transform: uppercase;
             margin-top: -10px;
-            font-weight: 400;
         }
     </style>
 </head>
