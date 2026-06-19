@@ -97,7 +97,7 @@
 
         function agregar(nombre, precio, id, img) {
             const talla = document.getElementById(`talla-${id}`).value;
-            const cant = document.getElementById(`cant-${id}`).value;
+            const cant = parseInt(document.getElementById(`cant-${id}`).value);
             carrito.push({ nombre, precio, talla, cant, img });
             document.getElementById('cuenta').innerText = carrito.length;
             actualizarCarrito();
@@ -108,7 +108,12 @@
             lista.innerHTML = carrito.map((i, idx) => `
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:0.8rem; border-bottom:1px solid #eee;">
                     <img src="${i.img}" style="width:40px; height:40px; border-radius:5px; object-fit:cover;">
-                    <div style="flex-grow:1;">${i.nombre} (${i.talla})<br>Cant: ${i.cant}</div>
+                    <div style="flex-grow:1;">
+                        ${i.nombre} (${i.talla})<br>
+                        <span onclick="if(carrito[${idx}].cant>1){carrito[${idx}].cant--; actualizarCarrito();}" style="cursor:pointer; font-weight:bold;">-</span>
+                        ${i.cant}
+                        <span onclick="carrito[${idx}].cant++; actualizarCarrito();" style="cursor:pointer; font-weight:bold;">+</span>
+                    </div>
                     <span onclick="carrito.splice(${idx},1); document.getElementById('cuenta').innerText = carrito.length; actualizarCarrito();" style="color:red; cursor:pointer; font-weight:bold;">X</span>
                 </div>
             `).join('');
