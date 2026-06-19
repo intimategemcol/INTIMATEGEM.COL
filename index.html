@@ -29,7 +29,6 @@
 
         #carrito-flotante { position: fixed; bottom: 25px; right: 25px; background: #8b5d5d; color: white; padding: 25px 30px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 6px 15px rgba(0,0,0,0.3); font-size: 1.5rem; font-weight: bold; }
         
-        /* Carrito con estructura fija para el total */
         #lista-carrito { display: none; position: fixed; bottom: 100px; right: 10px; width: 320px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
         #items-en-carrito { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; }
         
@@ -53,7 +52,7 @@
         <div id="items-en-carrito"></div>
         <div id="area-estatica">
             <div id="total-carrito" style="font-weight:bold; font-size:1.4rem; margin:10px 0; color:#8b5d5d;"></div>
-            <button class="btn-carrito" onclick="enviarPedido()" style="padding: 15px; font-size: 1.1rem; margin-top:0;">Finalizar Pedido</button>
+            <button class="btn-carrito" onclick="enviarPedido()" style="padding: 15px; font-size: 1.1rem; margin-top:0;">Finalizar Pedido por WhatsApp</button>
         </div>
     </div>
 
