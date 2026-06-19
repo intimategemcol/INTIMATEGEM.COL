@@ -5,11 +5,11 @@
     <title>IntimateGem.col</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* Fondo blanco simple */
-        body { margin: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 80px; }
+        body { margin: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 50px; }
         
-        h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #8b5d5d; margin: 0; line-height: 1; }
-        .eslogan { font-size: 1.4rem; color: #8b5d5d; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; margin-bottom: 50px; font-weight: 300; }
+        /* Título reducido y más estético */
+        h1 { font-family: 'Great Vibes', cursive; font-size: 4rem; color: #8b5d5d; margin: 0; line-height: 1; }
+        .eslogan { font-size: 1rem; color: #8b5d5d; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; margin-bottom: 30px; font-weight: 300; }
         
         .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 20px; flex-wrap: wrap; }
         .producto-card { width: 320px; border: 1px solid #eee; background: white; padding: 25px; border-radius: 15px; transition: opacity 0.3s; }
@@ -29,9 +29,10 @@
         
         .badge-agotado { color: #d9534f; font-weight: bold; font-size: 1.4rem; margin: 15px 0; }
 
-        #carrito-flotante { position: fixed; bottom: 25px; right: 25px; background: #8b5d5d; color: white; padding: 25px 30px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 6px 15px rgba(0,0,0,0.3); font-size: 1.5rem; font-weight: bold; }
+        /* Carrito movido a la parte superior */
+        #carrito-flotante { position: fixed; top: 20px; right: 20px; background: #8b5d5d; color: white; padding: 15px 20px; border-radius: 30px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-size: 1.2rem; font-weight: bold; }
         
-        #lista-carrito { display: none; position: fixed; bottom: 100px; right: 10px; width: 340px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); flex-direction: column; }
+        #lista-carrito { display: none; position: fixed; top: 80px; right: 20px; width: 340px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); flex-direction: column; }
         #items-en-carrito { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; }
         
         .btn-control { cursor: pointer; background: #8b5d5d; color: white; padding: 2px 12px; border-radius: 5px; font-weight: 900; font-size: 1.2rem; display: inline-block; border: 2px solid #5a3e3e; }
@@ -43,12 +44,13 @@
 </head>
 <body>
 
+    <div id="carrito-flotante" onclick="toggleCarrito()">🛒 (<span id="cuenta">0</span>)</div>
+
     <h1>IntimateGem.col ✨</h1>
     <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
 
     <div class="productos-grid" id="lista-productos">Cargando catálogo...</div>
 
-    <div id="carrito-flotante" onclick="toggleCarrito()">🛒 (<span id="cuenta">0</span>)</div>
     <div id="lista-carrito">
         <h3 style="margin:0 0 15px 0; color:#8b5d5d; font-family:'Great Vibes'; font-size:2rem;">Tu Selección</h3>
         <div id="items-en-carrito"></div>
