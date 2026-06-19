@@ -9,7 +9,6 @@
     <style>
         body { margin: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 50px; }
         
-        /* Lateral ajustado para no bloquear el catálogo */
         #lateral { position: absolute; left: 20px; top: 50px; width: 180px; text-align: left; font-size: 0.9rem; color: #5a3e3e; z-index: 10; }
         .redes { display: flex; gap: 15px; margin-top: 10px; font-size: 1.4rem; }
         .redes a { color: #8b5d5d; text-decoration: none; transition: 0.3s; }
@@ -30,6 +29,10 @@
         .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 3rem; color: #5a3e3e; text-align: center; margin: 15px 0; }
         .producto-desc { font-size: 1.1rem; color: #777; margin-bottom: 20px; min-height: 50px; }
         
+        /* Estilos para colores */
+        .contenedor-colores { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; }
+        .circulo-color { width: 22px; height: 22px; border-radius: 50%; border: 1px solid #ddd; }
+
         .opciones-compra { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
         select { padding: 8px 15px; border: 1px solid #ccc; border-radius: 5px; color: #5a3e3e; outline: none; font-size: 1rem; }
         
@@ -101,6 +104,7 @@
                 const estado = (row.c[6]?.v || "").toLowerCase();
                 const desc = row.c[7]?.v || "";
                 const tallas = (row.c[8]?.v || "U").split(', ');
+                const colores = (row.c[9]?.v || "").split(', ');
 
                 const card = document.createElement('div');
                 card.className = `producto-card ${estado === 'agotado' ? 'agotado' : ''}`;
@@ -112,6 +116,9 @@
                         <img src="${f3}" class="mini" onclick="cambiarFoto('${index}', '${f3}')">
                     </div>
                     <div class="producto-nombre">${nombre}</div>
+                    <div class="contenedor-colores">
+                        ${colores.map(c => `<div class="circulo-color" style="background-color: ${c.trim()};" title="${c.trim()}"></div>`).join('')}
+                    </div>
                     <div class="producto-desc">${desc}</div>
                     ${estado === 'agotado' ? '<div class="badge-agotado">AGOTADO</div>' : `
                         <div class="opciones-compra">
