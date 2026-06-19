@@ -3,81 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>IntimateGem.col</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #aa7c7c; }
-        body { background-color: #fcf8f5; font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; text-align: center; }
-        
-        /* Título y Logo */
-        .logo-container { margin: 30px 0; }
-        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--primary); margin: 0; }
-        .eslogan { font-family: 'Poppins', sans-serif; font-size: 1rem; color: #888; }
-        
-        /* Tarjetas */
-        #contenedor-productos { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
-        .producto-card { background: white; padding: 20px; border-radius: 20px; border: 1px solid #efe8e8; }
-        
-        /* Inputs reducidos */
-        select, input { width: 60%; padding: 8px; margin: 5px auto; display: block; border-radius: 10px; border: 1px solid #ccc; }
-        
-        /* Carrito Moderno */
-        #modal-carrito { display:none; position:fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1000; }
-        .btn-flotante { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; padding: 15px; border-radius: 50px; cursor: pointer; }
+        /* Fondo elegante con flores sutiles */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fcf8f5;
+            background-image: url('https://www.transparenttextures.com/patterns/floral-wallpaper.png');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Estilo del título con tu tipografía */
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 6rem;
+            color: #aa7c7c;
+            margin: 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div class="logo-container">
-        <h1>IntimateGem.col ✨</h1>
-        <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
-    </div>
+    <h1>IntimateGem.col</h1>
 
-    <div id="contenedor-productos"></div>
-    <div class="btn-flotante" onclick="document.getElementById('modal-carrito').style.display='block'">🛒 Carrito</div>
-
-    <div id="modal-carrito">
-        <h2 style="font-family:'Playfair Display'">Tu Selección</h2>
-        <div id="lista-detallada"></div>
-        <button onclick="enviarWhatsApp()" style="width:100%; padding:10px; background:var(--primary); color:white; border:none; border-radius:10px;">Finalizar Pedido (WhatsApp)</button>
-        <button onclick="document.getElementById('modal-carrito').style.display='none'" style="width:100%; margin-top:5px;">Cerrar</button>
-    </div>
-
-<script>
-    const url = "https://docs.google.com/spreadsheets/d/1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg/gviz/tq?tqx=out:json";
-    let inventario = [], carrito = [];
-
-    async function cargar() {
-        const res = await (await fetch(url)).text();
-        const json = JSON.parse(res.substr(47).slice(0, -2));
-        inventario = json.table.rows.map(f => ({ id: f.c[0]?.v, nombre: f.c[1]?.v, precio: f.c[2]?.v, foto1: f.c[3]?.v }));
-        
-        document.getElementById("contenedor-productos").innerHTML = inventario.map(p => `
-            <div class="producto-card">
-                <img src="${p.foto1}" style="width:100%; border-radius:15px;">
-                <h3>${p.nombre}</h3>
-                <select id="talla-${p.id}"><option>XS</option><option>S</option><option>M</option><option>L</option></select>
-                <input type="number" id="cant-${p.id}" value="1" min="1">
-                <button onclick="agregar('${p.id}')" style="background:var(--primary); color:white; border:none; padding:8px 20px; border-radius:10px;">Añadir</button>
-            </div>`).join('');
-    }
-
-    function agregar(id) {
-        const p = inventario.find(i => i.id == id);
-        carrito.push({ ...p, talla: document.getElementById(`talla-${id}`).value, cant: document.getElementById(`cant-${id}`).value });
-        actualizarCarrito();
-    }
-
-    function actualizarCarrito() {
-        document.getElementById("lista-detallada").innerHTML = carrito.map((item, i) => `
-            <div style="border-bottom:1px solid #eee; padding:5px 0;">${item.nombre} (T:${item.talla} x${item.cant})</div>`).join('');
-    }
-
-    function enviarWhatsApp() {
-        let msj = "Pedido: " + carrito.map(i => `\n- ${i.nombre} (T:${i.talla} Cant:${i.cant})`).join('');
-        window.open(`https://wa.me/573014816594?text=${encodeURIComponent(msj)}`);
-    }
-
-    cargar();
-</script>
 </body>
 </html>
