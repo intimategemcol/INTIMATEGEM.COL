@@ -3,26 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>IntimateGem.col</title>
+    <!-- Importamos fuentes elegantes -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        body { background: #fcf8f5; font-family: sans-serif; margin: 0; padding: 20px; }
-        #contenedor-productos { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 50px; }
-        .producto-card { background: white; padding: 15px; border-radius: 15px; width: 250px; text-align: center; }
-        .producto-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
-        #modal-carrito { display:none; position:fixed; top:0; right:0; width:300px; height:100%; background:white; z-index:9999; padding:20px; box-shadow:-5px 0 10px rgba(0,0,0,0.1); }
-        #modal-carrito.activo { display:block; }
+        body { 
+            background-color: #fcf8f5; 
+            font-family: 'Poppins', sans-serif; 
+            color: #4a3737; 
+            margin: 0; 
+            padding: 40px 20px;
+            /* Fondo floral delicado */
+            background-image: url('https://www.transparenttextures.com/patterns/floral-wallpaper.png');
+        }
+        h1 { font-family: 'Playfair Display', serif; text-align: center; color: #aa7c7c; margin-bottom: 50px; }
+        
+        #contenedor-productos { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+        
+        .producto-card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 25px; 
+            text-align: center; 
+            border: 1px solid #e0d0d0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        
+        .producto-card img { 
+            width: 100%; 
+            height: 300px; 
+            object-fit: cover; 
+            border-radius: 20px; 
+            margin-bottom: 15px; 
+        }
+        
+        h3 { font-family: 'Playfair Display', serif; margin: 10px 0; }
+        
+        .precio { color: #aa7c7c; font-weight: bold; margin-bottom: 15px; }
+        
+        button { 
+            background: #aa7c7c; 
+            color: white; 
+            border: none; 
+            padding: 12px 30px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+        }
     </style>
 </head>
 <body>
 
-    <h1 style="text-align:center;">IntimateGem.col</h1>
+    <h1>IntimateGem.col</h1>
     <div id="contenedor-productos">Cargando catálogo...</div>
-    <div id="icono-carrito" onclick="document.getElementById('modal-carrito').classList.add('activo')" style="position:fixed; bottom:20px; right:20px; background:#aa7c7c; color:white; padding:15px; border-radius:50px; cursor:pointer;">🛒</div>
-
-    <div id="modal-carrito">
-        <h3>Tu pedido</h3>
-        <div id="lista-carrito"></div>
-        <button onclick="document.getElementById('modal-carrito').classList.remove('activo')">Cerrar</button>
-    </div>
 
 <script>
     const url = "https://docs.google.com/spreadsheets/d/1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg/gviz/tq?tqx=out:json";
@@ -41,12 +80,12 @@
                     <div class="producto-card">
                         <img src="${f.c[3]?.v}">
                         <h3>${f.c[1]?.v}</h3>
-                        <p>$${f.c[2]?.v}</p>
-                        <button onclick="alert('Agregado')">Agregar</button>
+                        <p class="precio">$${f.c[2]?.v}</p>
+                        <button onclick="alert('Agregado')">Añadir al Carrito</button>
                     </div>`;
             });
         } catch(e) {
-            document.getElementById("contenedor-productos").innerHTML = "Error al cargar datos. Verifica que tu hoja esté publicada en la web.";
+            document.getElementById("contenedor-productos").innerHTML = "Error al cargar datos.";
         }
     }
     cargar();
