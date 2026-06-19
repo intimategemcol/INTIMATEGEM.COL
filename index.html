@@ -29,7 +29,9 @@
 
         #carrito-flotante { position: fixed; bottom: 25px; right: 25px; background: #8b5d5d; color: white; padding: 25px 30px; border-radius: 50px; cursor: pointer; z-index: 1000; box-shadow: 0 6px 15px rgba(0,0,0,0.3); font-size: 1.5rem; font-weight: bold; }
         
-        #lista-carrito { display: none; position: fixed; bottom: 100px; right: 10px; width: 320px; background: white; border: 1px solid #eee; padding: 20px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; overflow-y: auto; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        /* Carrito con estructura fija para el total */
+        #lista-carrito { display: none; position: fixed; bottom: 100px; right: 10px; width: 320px; background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
+        #items-en-carrito { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; }
         
         .btn-control { cursor: pointer; background: #8b5d5d; color: white; padding: 5px 15px; border-radius: 6px; font-weight: 900; font-size: 1.3rem; margin: 0 10px; }
 
@@ -49,8 +51,10 @@
     <div id="lista-carrito">
         <h3 style="margin:0 0 15px 0; color:#8b5d5d; font-family:'Great Vibes'; font-size:2rem;">Tu Selección</h3>
         <div id="items-en-carrito"></div>
-        <div id="total-carrito" style="font-weight:bold; font-size:1.4rem; margin:20px 0; color:#8b5d5d;"></div>
-        <button class="btn-carrito" onclick="enviarPedido()" style="padding: 15px; font-size: 1.1rem;">Finalizar Pedido</button>
+        <div id="area-estatica">
+            <div id="total-carrito" style="font-weight:bold; font-size:1.4rem; margin:10px 0; color:#8b5d5d;"></div>
+            <button class="btn-carrito" onclick="enviarPedido()" style="padding: 15px; font-size: 1.1rem; margin-top:0;">Finalizar Pedido</button>
+        </div>
     </div>
 
     <div id="lightbox" onclick="this.style.display='none'">
@@ -132,9 +136,11 @@
             document.getElementById('total-carrito').innerText = "Total: $" + totalGeneral.toLocaleString();
         }
 
-        function toggleCarrito() { document.getElementById('lista-carrito').style.display = document.getElementById('lista-carrito').style.display === 'block' ? 'none' : 'block'; }
+        function toggleCarrito() { 
+            const car = document.getElementById('lista-carrito');
+            car.style.display = car.style.display === 'flex' ? 'none' : 'flex'; 
+        }
         function cambiarFoto(id, src) { document.getElementById(`main-${id}`).src = src; }
-        /* Nueva función que toma el SRC de la imagen que está activa */
         function abrirZoom(id) { 
             document.getElementById('zoom-img').src = document.getElementById(id).src; 
             document.getElementById('lightbox').style.display = 'flex'; 
