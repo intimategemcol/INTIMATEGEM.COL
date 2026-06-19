@@ -8,11 +8,14 @@
         body {
             margin: 0;
             padding: 0;
-            /* Usamos una imagen de fondo de flores con más color y detalle */
-            background-image: url('https://images.unsplash.com/photo-1518524364024-57774705706c?q=80&w=2000&auto=format&fit=crop');
+            /* Fondo de flores elegante, estilo boutique, alta definición */
+            background-image: url('https://images.unsplash.com/photo-1526045612212-07caf87c5c74?q=80&w=2000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            background-repeat: no-repeat;
+            
+            /* Eliminamos los filtros de opacidad/transparencia */
             text-align: center;
             font-family: 'Poppins', sans-serif;
             padding-top: 80px;
@@ -20,25 +23,27 @@
 
         .header-container {
             margin-bottom: 40px;
-            /* Sin fondos, sin sombras, nada que cubra el nombre */
-            background: transparent;
+            /* Aseguramos que nada bloquee la vista del fondo */
+            background: none !important;
         }
 
+        /* Título sin cajas, sin fondos, tal como lo quieres */
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 6rem;
-            color: #6b3f3f; /* Un tono un poco más oscuro para que resalte sobre las flores */
+            font-size: 7rem; 
+            color: #5a3e3e; /* Un tono más profundo para que resalte sobre las flores */
             margin: 0;
-            text-shadow: none; /* Aseguramos que no haya sombras */
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
         }
 
         .eslogan {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.3rem;
-            color: #4a2c2c;
-            letter-spacing: 4px;
+            font-size: 1.4rem;
+            color: #4a3737;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            margin-top: -10px;
+            margin-top: -15px;
+            font-weight: 400;
         }
     </style>
 </head>
