@@ -30,8 +30,8 @@
         .mini { width: 65px; height: 65px; object-fit: cover; cursor: pointer; border: 1px solid #ddd; border-radius: 5px; }
         
         .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 3rem; color: #5a3e3e; text-align: center; margin: 15px 0; }
-        .producto-desc { font-size: 1.1rem; color: #777; margin-bottom: 10px; text-align: justify; }
-        .ver-mas { color: #8b5d5d; cursor: pointer; font-size: 0.9rem; font-weight: bold; display: block; margin-bottom: 20px; }
+        .producto-desc { font-size: 1.1rem; color: #777; margin-bottom: 20px; min-height: 50px; text-align: justify; }
+        .btn-ver-mas { color: #8b5d5d; cursor: pointer; font-weight: bold; font-size: 0.9rem; display: block; margin-top: 5px; text-decoration: underline; }
         
         .opciones-compra { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
         select { padding: 8px 15px; border: 1px solid #ccc; border-radius: 5px; color: #5a3e3e; outline: none; font-size: 1rem; }
@@ -123,11 +123,11 @@
                 const card = document.createElement('div');
                 card.className = `producto-card ${estado === 'agotado' ? 'agotado' : ''}`;
                 
-                let descHTML = desc;
-                let btnVerMas = "";
-                if (desc.length > 80) {
-                    descHTML = `<span id="desc-${index}">${desc.substring(0, 80)}...</span>`;
-                    btnVerMas = `<span class="ver-mas" onclick="toggleDesc(${index}, '${desc.replace(/'/g, "\\'")}')" id="btn-desc-${index}">Ver más</span>`;
+                let htmlDesc = desc;
+                let btnHtml = "";
+                if (desc.length > 100) {
+                    htmlDesc = `<span id="desc-corta-${index}">${desc.substring(0, 100)}...</span><span id="desc-larga-${index}" style="display:none;">${desc}</span>`;
+                    btnHtml = `<span class="btn-ver-mas" id="btn-desc-${index}" onclick="toggleDesc(${index})">Ver más</span>`;
                 }
 
                 card.innerHTML = `
@@ -138,8 +138,7 @@
                         <img src="${f3}" class="mini" onclick="cambiarFoto('${index}', '${f3}')">
                     </div>
                     <div class="producto-nombre">${nombre}</div>
-                    <div class="producto-desc">${descHTML}</div>
-                    ${btnVerMas}
+                    <div class="producto-desc">${htmlDesc}${btnHtml}</div>
                     ${estado === 'agotado' ? '<div style="color:#8b5d5d; font-weight:bold;">AGOTADO</div>' : `
                         <div class="opciones-compra"><select id="talla-${index}">${tallas.map(t => `<option value="${t}">${t}</option>`).join('')}</select></div>
                         <div style="font-weight: bold; color:#8b5d5d; margin-top:15px; font-size:1.3rem;">$${precio ? precio.toLocaleString() : '0'}</div>
@@ -150,15 +149,18 @@
             });
         }
 
-        function toggleDesc(id, textoCompleto) {
-            const span = document.getElementById('desc-' + id);
+        function toggleDesc(id) {
+            const corta = document.getElementById('desc-corta-' + id);
+            const larga = document.getElementById('desc-larga-' + id);
             const btn = document.getElementById('btn-desc-' + id);
-            if (span.innerText.length < 50) {
-                span.innerText = textoCompleto;
-                btn.innerText = "Ver menos";
+            if (larga.style.display === 'none') {
+                larga.style.display = 'inline';
+                corta.style.display = 'none';
+                btn.innerText = 'Ver menos';
             } else {
-                span.innerText = textoCompleto.substring(0, 80) + "...";
-                btn.innerText = "Ver más";
+                larga.style.display = 'none';
+                corta.style.display = 'inline';
+                btn.innerText = 'Ver más';
             }
         }
 
