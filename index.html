@@ -117,7 +117,8 @@
             datos.forEach((row, index) => {
                 const nombre = row.c[1]?.v, precio = row.c[2]?.v, f1 = row.c[3]?.v, f2 = row.c[4]?.v, f3 = row.c[5]?.v;
                 const estado = (row.c[6]?.v || "").toLowerCase(), desc = row.c[7]?.v || "";
-                const tallas = (row.c[8]?.v || "U").split(', ');
+                // Se corrigió para leer el valor exacto de la celda de tallas
+                const tallas = (row.c[8]?.v ? String(row.c[8].v).split(', ') : ["U"]);
                 
                 const card = document.createElement('div');
                 card.className = `producto-card ${estado === 'agotado' ? 'agotado' : ''}`;
