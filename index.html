@@ -71,6 +71,11 @@
         <span id="cuenta" style="font-size: 0.8rem; margin-left: 2px; font-weight: bold;">0</span>
     </div>
 
+    <div id="lista-carrito">
+        <div id="items-en-carrito"></div>
+        <button class="btn-carrito" onclick="finalizarPedido()">Finalizar Pedido</button>
+    </div>
+
     <h1>IntimateGem.col <span class="color-marca" style="font-size: 2rem;">✧</span></h1>
     <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
 
@@ -85,8 +90,14 @@
 
     <div class="productos-grid" id="lista-productos">Cargando catálogo...</div>
 
+    <div id="lightbox" onclick="this.style.display='none'">
+        <span class="cerrar-zoom">&times;</span>
+        <img id="img-zoom" src="">
+    </div>
+
     <script>
         let baseDatos = [];
+        let carrito = [];
         const sheetID = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
         const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
@@ -107,7 +118,7 @@
                 const card = document.createElement('div');
                 card.className = `producto-card ${estado === 'agotado' ? 'agotado' : ''}`;
                 card.innerHTML = `
-                    <img src="${f1}" class="img-principal" id="main-${index}">
+                    <img src="${f1}" class="img-principal" id="main-${index}" onclick="zoom('${f1}')">
                     <div class="galeria-mini">
                         <img src="${f1}" class="mini" onclick="cambiarFoto('${index}', '${f1}')">
                         <img src="${f2}" class="mini" onclick="cambiarFoto('${index}', '${f2}')">
@@ -116,13 +127,13 @@
                     <div class="producto-nombre">${nombre}</div>
                     <div class="contenedor-colores">${colores.map(c => `<div class="circulo-color" style="background-color: ${c.trim()};"></div>`).join('')}</div>
                     <div class="producto-desc">${desc}</div>
-                    ${estado === 'agotado' ? '<div class="badge-agotado">AGOTADO</div>' : `
+                    ${estado === 'agotado' ? '<div style="color:#8b5d5d; font-weight:bold;">AGOTADO</div>' : `
                         <div class="opciones-compra">
                             <select id="talla-${index}">${tallas.map(t => `<option value="${t}">${t}</option>`).join('')}</select>
                             <select id="cant-${index}"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
                         </div>
                         <div style="font-weight: bold; color:#8b5d5d; margin-top:15px; font-size:1.3rem;">$${precio.toLocaleString()}</div>
-                        <button class="btn-carrito" onclick="agregar('${nombre}', ${precio}, '${index}', '${f1}')">Agregar al Carrito</button>
+                        <button class="btn-carrito" onclick="agregar('${nombre}', ${precio}, '${index}')">Agregar al Carrito</button>
                     `}
                 `;
                 container.appendChild(card);
@@ -132,11 +143,36 @@
         function filtrarProductos() {
             const cat = document.getElementById('filtro').value;
             if (cat === 'todos') { mostrarProductos(baseDatos); return; }
-            const filtrados = baseDatos.filter(row => row.c[10]?.v.toLowerCase() === cat);
+            // Filtra basándose en la columna K (índice 10)
+            const filtrados = baseDatos.filter(row => (row.c[10]?.v || "").toLowerCase().trim() === cat);
             mostrarProductos(filtrados);
         }
 
-        // ... resto de tus funciones (agregar, actualizarCarrito, etc.) se mantienen igual
+        function cambiarFoto(id, url) { document.getElementById('main-' + id).src = url; }
+        function zoom(url) { document.getElementById('img-zoom').src = url; document.getElementById('lightbox').style.display = 'flex'; }
+        function toggleCarrito() { const c = document.getElementById('lista-carrito'); c.style.display = (c.style.display === 'flex' ? 'none' : 'flex'); }
+        
+        function agregar(nombre, precio, id) {
+            const talla = document.getElementById('talla-' + id).value;
+            const cant = document.getElementById('cant-' + id).value;
+            carrito.push({ nombre, precio, talla, cant });
+            document.getElementById('cuenta').innerText = carrito.length;
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            const lista = document.getElementById('items-en-carrito');
+            lista.innerHTML = carrito.map((item, i) => `
+                <div style="margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
+                    ${item.nombre} (${item.talla}) - ${item.cant} und - $${(item.precio * item.cant).toLocaleString()}
+                </div>
+            `).join('');
+        }
+
+        function finalizarPedido() {
+            let msg = "Hola! Quiero pedir:%0A" + carrito.map(i => `${i.nombre} (Talla: ${i.talla}, Cant: ${i.cant})`).join('%0A');
+            window.open(`https://wa.me/573000000000?text=${msg}`);
+        }
     </script>
 </body>
 </html>
