@@ -1,15 +1,122 @@
-function mostrarProductos(datos) {
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>IntimateGem.col</title>
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1FRwiNrN4pAvDWtGZ47nBgNfdRtz2RYfZ">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { margin: 0; background-color: #ffffff; text-align: center; font-family: 'Poppins', sans-serif; padding-top: 50px; }
+        
+        #lateral { position: absolute; left: 20px; top: 50px; width: 180px; text-align: left; font-size: 0.9rem; color: #5a3e3e; z-index: 10; }
+        .redes { display: flex; gap: 15px; margin-top: 10px; font-size: 1.4rem; }
+        .redes a { color: #8b5d5d; text-decoration: none; transition: 0.3s; }
+        .redes a:hover { color: #5a3e3e; }
+
+        h1 { font-family: 'Great Vibes', cursive; font-size: 4rem; color: #8b5d5d; margin: 0; line-height: 1; }
+        .eslogan { font-size: 1rem; color: #8b5d5d; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; margin-bottom: 30px; font-weight: 300; }
+        .color-marca { color: #8b5d5d; }
+        
+        .filtro-bloques { margin: 20px 0; }
+        .filtro-bloques select { padding: 10px 20px; border: 2px solid #8b5d5d; border-radius: 20px; color: #8b5d5d; font-weight: bold; cursor: pointer; }
+
+        .productos-grid { display: flex; justify-content: center; gap: 40px; padding: 20px; flex-wrap: wrap; margin-top: 20px; }
+        .producto-card { width: 320px; border: 1px solid #eee; background: white; padding: 25px; border-radius: 15px; transition: opacity 0.3s; }
+        .producto-card.agotado { opacity: 0.6; filter: grayscale(0.5); }
+        
+        .img-principal { width: 100%; height: 300px; object-fit: cover; border-radius: 10px; cursor: zoom-in; }
+        .galeria-mini { display: flex; gap: 5px; margin: 15px 0; justify-content: center; }
+        .mini { width: 65px; height: 65px; object-fit: cover; cursor: pointer; border: 1px solid #ddd; border-radius: 5px; }
+        
+        .producto-nombre { font-family: 'Great Vibes', cursive; font-size: 3rem; color: #5a3e3e; text-align: center; margin: 15px 0; }
+        .producto-desc { font-size: 1.1rem; color: #777; margin-bottom: 20px; min-height: 50px; }
+        
+        .opciones-compra { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        select { padding: 8px 15px; border: 1px solid #ccc; border-radius: 5px; color: #5a3e3e; outline: none; font-size: 1rem; }
+        
+        .btn-carrito { background-color: #8b5d5d; color: white; border: none; padding: 15px 25px; border-radius: 20px; cursor: pointer; font-size: 1.1rem; margin-top: 15px; transition: 0.3s; width: 100%; }
+        
+        #carrito-flotante { position: fixed; top: 15px; right: 15px; color: #ffffff; background-color: #8b5d5d; cursor: pointer; z-index: 1000; padding: 15px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border: 2px solid #5a3e3e; }
+        
+        #lista-carrito { display: none; position: fixed; top: 90px; right: 20px; width: 360px; background: white; border: 1px solid #eee; padding: 20px; border-radius: 15px; z-index: 1000; text-align: left; max-height: 70vh; box-shadow: 0 5px 15px rgba(0,0,0,0.15); flex-direction: column; }
+        #items-en-carrito { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; }
+        .btn-qty { background: #5a3e3e; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin: 0 5px; font-weight: bold; }
+        
+        #lightbox { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; }
+        #lightbox img { max-width: 80%; max-height: 80%; border-radius: 10px; }
+        .flecha { position: absolute; top: 50%; color: white; font-size: 50px; cursor: pointer; padding: 20px; user-select: none; }
+        #flecha-izq { left: 20px; }
+        #flecha-der { right: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="lateral">
+        <p style="margin:0;"><strong>Tienda Virtual</strong></p>
+        <p style="margin:5px 0;">📍 Santa Marta, CO</p>
+        <p style="margin:0;">🚚 Envíos Nacionales</p>
+        <div class="redes">
+            <a href="https://www.instagram.com/intimategem.col" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/message/CHUJGAB3375FG1" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/share/1BS92CFTqo/" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.tiktok.com/@intimategem.col" target="_blank"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </div>
+
+    <div id="carrito-flotante" onclick="toggleCarrito()">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span id="cuenta" style="font-size: 1rem; margin-left: 5px; font-weight: bold;">0</span>
+    </div>
+
+    <div id="lista-carrito">
+        <h3 style="margin:0 0 15px 0; color:#8b5d5d;">Tu Selección</h3>
+        <div id="items-en-carrito"></div>
+        <div id="total-general" style="font-weight:bold; font-size:1.2rem; margin:15px 0; color:#5a3e3e;"></div>
+        <button class="btn-carrito" onclick="finalizarPedido()">Finalizar Pedido en Whatsapp</button>
+    </div>
+
+    <h1>IntimateGem.col <span class="color-marca" style="font-size: 2rem;">✧</span></h1>
+    <p class="eslogan">UN ESPACIO ÍNTIMO PARA TI</p>
+
+    <div class="filtro-bloques">
+        <select id="filtro" onchange="filtrarProductos()">
+            <option value="todos">☰ Todas las Categorías</option>
+            <option value="sets">Sets</option>
+            <option value="corsets">Corsets</option>
+            <option value="body">Body</option>
+            <option value="babydolls">Babydolls</option>
+        </select>
+    </div>
+
+    <div class="productos-grid" id="lista-productos">Cargando catálogo...</div>
+
+    <div id="lightbox" onclick="cerrarZoom(event)">
+        <span class="flecha" id="flecha-izq" onclick="cambiarZoom(-1, event)">❮</span>
+        <img id="img-zoom" src="">
+        <span class="flecha" id="flecha-der" onclick="cambiarZoom(1, event)">❯</span>
+    </div>
+
+    <script>
+        let baseDatos = [];
+        let carrito = [];
+        let zoomFotos = [];
+        let zoomIndex = 0;
+        const sheetID = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
+        const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+
+        fetch(url).then(res => res.text()).then(data => {
+            const json = JSON.parse(data.substr(47).slice(0, -2));
+            baseDatos = json.table.rows;
+            mostrarProductos(baseDatos);
+        });
+
+        function mostrarProductos(datos) {
             const container = document.getElementById('lista-productos');
             container.innerHTML = "";
             datos.forEach((row, index) => {
-                // Ajuste de índices: B=1, C=2, D=3, E=4, F=5, G=6 (Estado), H=7 (Desc), I=8 (Tallas)
-                const nombre = row.c[1]?.v || "Producto", 
-                      precio = row.c[2]?.v || 0, 
-                      f1 = row.c[3]?.v, 
-                      f2 = row.c[4]?.v, 
-                      f3 = row.c[5]?.v;
-                const estado = (row.c[6]?.v || "").toLowerCase(), 
-                      desc = row.c[7]?.v || "";
+                const nombre = row.c[1]?.v, precio = row.c[2]?.v, f1 = row.c[3]?.v, f2 = row.c[4]?.v, f3 = row.c[5]?.v;
+                const estado = (row.c[6]?.v || "").toLowerCase(), desc = row.c[7]?.v || "";
                 const tallas = (row.c[8]?.v || "U").split(', ');
                 
                 const card = document.createElement('div');
@@ -32,3 +139,65 @@ function mostrarProductos(datos) {
                 container.appendChild(card);
             });
         }
+
+        function abrirZoom(fotos, idx) {
+            zoomFotos = fotos; zoomIndex = idx;
+            document.getElementById('img-zoom').src = zoomFotos[zoomIndex];
+            document.getElementById('lightbox').style.display = 'flex';
+            document.getElementById('lista-carrito').style.display = 'none';
+        }
+
+        function cerrarZoom(e) { if(e.target.id === 'lightbox') document.getElementById('lightbox').style.display = 'none'; }
+        
+        function cambiarZoom(dir, e) {
+            e.stopPropagation();
+            zoomIndex = (zoomIndex + dir + zoomFotos.length) % zoomFotos.length;
+            document.getElementById('img-zoom').src = zoomFotos[zoomIndex];
+        }
+
+        function agregar(nombre, precio, img, id) {
+            const talla = document.getElementById('talla-' + id).value;
+            carrito.push({ nombre, precio, img, talla, cant: 1 });
+            actualizarCarrito();
+        }
+
+        function cambiarCantidad(index, delta) {
+            carrito[index].cant += delta;
+            if (carrito[index].cant <= 0) carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            const lista = document.getElementById('items-en-carrito');
+            let total = 0;
+            lista.innerHTML = carrito.map((item, i) => {
+                total += (item.precio * item.cant);
+                return `
+                    <div style="display:flex; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <img src="${item.img}" style="width:50px; height:50px; object-fit:cover; margin-right:10px; border-radius:5px;">
+                        <div style="flex-grow:1; font-size:0.9rem;">${item.nombre} (${item.talla})<br><strong>$${(item.precio * item.cant).toLocaleString()}</strong></div>
+                        <button class="btn-qty" onclick="cambiarCantidad(${i}, -1)">-</button>
+                        <span style="margin:0 10px;">${item.cant}</span>
+                        <button class="btn-qty" onclick="cambiarCantidad(${i}, 1)">+</button>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('cuenta').innerText = carrito.length;
+            document.getElementById('total-general').innerText = "Total: $" + total.toLocaleString();
+        }
+
+        function filtrarProductos() {
+            const cat = document.getElementById('filtro').value;
+            if (cat === 'todos') { mostrarProductos(baseDatos); } 
+            else { mostrarProductos(baseDatos.filter(r => (r.c[9]?.v || "").toLowerCase().trim() === cat)); }
+        }
+
+        function cambiarFoto(id, url) { document.getElementById('main-' + id).src = url; }
+        function toggleCarrito() { const c = document.getElementById('lista-carrito'); c.style.display = (c.style.display === 'flex' ? 'none' : 'flex'); }
+        function finalizarPedido() {
+            let msg = "¡Hola! Quiero pedir:%0A" + carrito.map(i => `${i.nombre} (Talla: ${i.talla}, Cant: ${i.cant})`).join('%0A');
+            window.open(`https://wa.me/573014816594?text=${msg}`);
+        }
+    </script>
+</body>
+</html>
