@@ -104,7 +104,6 @@
         let zoomFotos = [];
         let zoomIndex = 0;
         
-        // Detectar clics fuera para cerrar descripciones
         document.addEventListener('click', (e) => {
             if (!e.target.classList.contains('btn-ver-mas')) {
                 document.querySelectorAll('[id^="desc-larga-"]').forEach(el => {
@@ -232,7 +231,11 @@
         function cambiarFoto(id, url) { document.getElementById('main-' + id).src = url; }
         function toggleCarrito() { const c = document.getElementById('lista-carrito'); c.style.display = (c.style.display === 'flex' ? 'none' : 'flex'); }
         function finalizarPedido() {
-            let msg = "¡Hola! Quiero pedir:%0A" + carrito.map(i => `${i.nombre} (Talla: ${i.talla}, Cant: ${i.cant})`).join('%0A');
+            let totalGeneral = carrito.reduce((sum, item) => sum + (item.precio * item.cant), 0);
+            let msg = "¡Hola! Quisiera comprar estas prendas:%0A" + 
+                      carrito.map(i => `- ${i.nombre} | Talla: ${i.talla} | Cant: ${i.cant} | Subtotal: $${(i.precio * i.cant).toLocaleString()}`).join('%0A') + 
+                      "%0A%0ATotal del pedido: $" + totalGeneral.toLocaleString() + 
+                      "%0A%0A¿Me regalas más información, por favor?";
             window.open(`https://wa.me/573014816594?text=${msg}`);
         }
     </script>
