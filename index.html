@@ -81,9 +81,10 @@
     <div class="filtro-bloques">
         <select id="filtro" onchange="filtrarProductos()">
             <option value="todos">☰ Todas las Categorías</option>
-            <option value="set">Sets</option>
-            <option value="corset">Corsets</option>
-            <option value="babydoll">Babydolls</option>
+            <option value="sets">Sets</option>
+            <option value="corsets">Corsets</option>
+            <option value="body">Body</option>
+            <option value="babydolls">Babydolls</option>
         </select>
     </div>
 
@@ -131,7 +132,7 @@
                             <select id="talla-${index}">${tallas.map(t => `<option value="${t}">${t}</option>`).join('')}</select>
                             <select id="cant-${index}"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
                         </div>
-                        <div style="font-weight: bold; color:#8b5d5d; margin-top:15px; font-size:1.3rem;">$${precio.toLocaleString()}</div>
+                        <div style="font-weight: bold; color:#8b5d5d; margin-top:15px; font-size:1.3rem;">$${precio ? precio.toLocaleString() : '0'}</div>
                         <button class="btn-carrito" onclick="agregar('${nombre}', ${precio}, '${index}')">Agregar al Carrito</button>
                     `}
                 `;
@@ -144,9 +145,10 @@
             if (cat === 'todos') { 
                 mostrarProductos(baseDatos); 
             } else {
-                // Filtramos buscando en la columna 10 (columna K)
                 const filtrados = baseDatos.filter(row => {
+                    // Normalizamos: pasamos a minúsculas y quitamos espacios
                     const categoriaHoja = (row.c[10]?.v || "").toString().toLowerCase().trim();
+                    // Comparamos contra el valor del select
                     return categoriaHoja === cat;
                 });
                 mostrarProductos(filtrados);
