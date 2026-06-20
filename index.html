@@ -103,6 +103,19 @@
         let carrito = [];
         let zoomFotos = [];
         let zoomIndex = 0;
+        
+        // Detectar clics fuera para cerrar descripciones
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('btn-ver-mas')) {
+                document.querySelectorAll('[id^="desc-larga-"]').forEach(el => {
+                    if (el.style.display === 'inline') {
+                        const id = el.id.split('-')[2];
+                        toggleDesc(id, true);
+                    }
+                });
+            }
+        });
+
         const sheetID = "1y1XFoMRlOXlloUTOIsXWIPhWTvrLw-edPxpSuuOwhyg";
         const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
@@ -127,7 +140,7 @@
                 let btnHtml = "";
                 if (desc.length > 100) {
                     htmlDesc = `<span id="desc-corta-${index}">${desc.substring(0, 100)}...</span><span id="desc-larga-${index}" style="display:none;">${desc}</span>`;
-                    btnHtml = `<span class="btn-ver-mas" id="btn-desc-${index}" onclick="toggleDesc(${index})">Ver más</span>`;
+                    btnHtml = `<span class="btn-ver-mas" id="btn-desc-${index}" onclick="event.stopPropagation(); toggleDesc(${index})">Ver más</span>`;
                 }
 
                 card.innerHTML = `
@@ -149,18 +162,18 @@
             });
         }
 
-        function toggleDesc(id) {
+        function toggleDesc(id, forceClose = false) {
             const corta = document.getElementById('desc-corta-' + id);
             const larga = document.getElementById('desc-larga-' + id);
             const btn = document.getElementById('btn-desc-' + id);
-            if (larga.style.display === 'none') {
-                larga.style.display = 'inline';
-                corta.style.display = 'none';
-                btn.innerText = 'Ver menos';
-            } else {
+            if (forceClose || larga.style.display === 'inline') {
                 larga.style.display = 'none';
                 corta.style.display = 'inline';
                 btn.innerText = 'Ver más';
+            } else {
+                larga.style.display = 'inline';
+                corta.style.display = 'none';
+                btn.innerText = 'Ver menos';
             }
         }
 
